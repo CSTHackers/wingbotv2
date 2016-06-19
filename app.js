@@ -1,5 +1,12 @@
 /* jshint esversion: 6 */
 
+/* Nolan Begin */
+//var HavenOnDemand = require('./HavenOnDemand.js')
+var catKey = require('./categoriesKey.js');
+//var wingbot = require('./wingbot.js');
+var haven = require('./HavenOnDemand.js');
+
+/* Nolan End */
 
 const
   bodyParser = require('body-parser'),
@@ -159,14 +166,6 @@ function receivedAuthentication(event) {
   // to let them know it was successful.
   sendMessage(senderID, "Authentication successful");
 }
-
-/* Nolan Begin */
-//var HavenOnDemand = require('./HavenOnDemand.js')
-var catKey = require('./categoriesKey.js');
-//var wingbot = require('./wingbot.js');
-var haven = require('./HavenOnDemand.js');
-
-/* Nolan End */
 
 /*LOGIC of the bot*/
 
