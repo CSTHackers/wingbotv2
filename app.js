@@ -398,7 +398,7 @@ function receivedPostback(event) {
 
   // When a postback is called, we'll send a message back to the sender to
   // let them know it was successful
-  sendMessage(senderID, "Postback called");
+  sendMessage(senderID, "Ok, "+payload+" pronouns it is!!");
 }
 
 
