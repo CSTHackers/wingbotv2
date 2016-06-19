@@ -1,15 +1,7 @@
-
-/* Nolan Begin */
-//var HavenOnDemand = require('./HavenOnDemand.js')
-var catKey = require('./oldCode/categoriesKey.js');
-//var wingbot = require('./wingbot.js');
-var haven = require('./oldCode/HavenOnDemand.js');
-
-/* Nolan End */
-
+/* jshint node: true, devel: true */
+'use strict';
 /*
 Connections to the API Facebook Starts here:
- *
  */
 
 const
@@ -25,6 +17,14 @@ var app = express();
 app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
+
+/* Nolan Begin */
+//var HavenOnDemand = require('./HavenOnDemand.js')
+var catKey = require('./oldCode/categoriesKey.js');
+//var wingbot = require('./wingbot.js');
+var haven = require('./oldCode/HavenOnDemand.js');
+
+/* Nolan End */
 
 /*
  * Be sure to setup your config values before running this code. You can

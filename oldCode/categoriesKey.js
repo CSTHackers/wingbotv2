@@ -57,9 +57,9 @@ var BigNerd= {
   index:5,
   keywords: ["videogame", "videogames", "geek", "tv shows", "movies", "comics", "anime", "manga", "fiction", ""],
   questions:["What is your gaming platform of choice?", "Do you belong to any fandoms?"],
-  subQuestions:["What multi-player game have you been playing the most?", "Why?"],
+  subQuestions:["What multi-player game have you been playing the most?", "What are your top three?"],
   answeredQuestions:[" In case you’re wondering about our gaming compatibility. If you’re ever up for a game, I’ve been playing a lot of # and will happily kick your ass any day of the week.",
-                    " In case you’re wondering about our gaming compatibility, I’m currently available for (insert platforms here). Currently totally in love with (insert game here). (Insert person’s “why” in here.)"],
+                    "Just in case you haven’t guessed, I am indeed a thoroughbred geek. Hit me up with your gifs, fanfiction or references, I will gladly take anything related to #."],
   statement: ""
 };
 
