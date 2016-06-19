@@ -281,13 +281,12 @@ function receivedMessage(event) {
     switch (stateOftheApp.state[0]) {
       case 0:
         console.log("case 0");
-        sendMessage(senderID,"Hey! I’m Wingbot. I can help you write your online dating Profile");
-        if (messageText === "hello") stateOftheApp.state[1] = 1;
-        else return;
-        if (stateOftheApp.state[1] === 1) {
-          sendMessage(senderID,"What should I call you?");
-          stateOftheApp.state[0] = 1;
-        }
+        if(stateOftheApp.state[1] === 0) sendMessage(senderID,"Hey! I’m Wingbot. I can help you write your online dating Profile");
+        if (messageText === "hello") {
+              sendMessage(senderID,"What should I call you?");
+              stateOftheApp.state[0] = 1;
+        } else stateOftheApp.state[1] = 1;
+        
         break;
       case 1:
         user.name = messageText;
@@ -298,6 +297,7 @@ function receivedMessage(event) {
           sendMessage(senderID, "Nice to meet you "+messageText);
           chooseGender(event);
         }
+        break;
       case 2:
         if (stateOftheApp.state[1] === 0) {
           if (isNegative(messageText)) {
@@ -389,21 +389,12 @@ function receivedPostback(event) {
   // The 'payload' param is a developer-defined field which is set in a postback
   // button for Structured Messages.
   var payload = event.postback.payload;
-
-  switch (stateOftheApp.state[0]) {
-    case 1:
+    if(payload) {
       user.gender = payload;
       sendMessage(senderID, "Ok, "+payload+" pronouns it is!!");
       askOpenEndedQuestion(event);
-      break;
-    // case 0:
-    //   if(payload == "Yes") {
-    //     sendMessage("Ok, then I will use this fact to write your About me.");
-    //     user.facts.push(stateOftheApp.userAnswer);
-    //   } else {
-    //     stateOftheApp.state = [1,1];
-    //   }
-  }
+    }
+}
 
   console.log("Received postback for user %d and page %d with payload '%s' " +
     "at %d", senderID, recipientID, payload, timeOfPostback);
