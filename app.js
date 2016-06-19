@@ -699,11 +699,11 @@ function isNegative(message){
       var score = resp.body.aggregate.score;
       console.log("negative check");
       if(score > 0){
-        console.log('false')
+        console.log("false")
         return false;
       }
       else{
-        console.log('true')
+        console.log("true")
         return true;
       }
     }
@@ -745,14 +745,14 @@ function callToAPI_check(textSentiments){
       if (!err1) {
         // Will go down a nested chain from a .json file which is generated from the api
         // It pulls the decimal value associated with how high/low a particular phrase is rated
-        var score = resp1.body.aggregate.score;
+        var score = resp1.body1.aggregate.score;
         if (score > 0) {
 
           var dataRelatedConcepts = dataSentiment;
           client.call('findrelatedconcepts', dataRelatedConcepts, function(err2, resp2, body2) {
             if (!err2) {
               //console.log('am i here 3?')
-              var relatedConcepts =  resp2.body.entities;
+              var relatedConcepts =  resp2.body2.entities;
               for (var i=0; i<relatedConcepts.length; i++) {
                 var relatedConcept = relatedConcepts[i];
                 var text = relatedConcept.text;
