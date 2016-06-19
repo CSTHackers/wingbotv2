@@ -166,7 +166,7 @@ function receivedAuthentication(event) {
 
 //user object to store information given
 var user  = {
-  name: "berta",
+  name: " ",
   gender:"neutral",
   facts:[" "],
   answeredQuestions: [""]
@@ -281,8 +281,10 @@ function receivedMessage(event) {
       case 0:
         console.log("case 0");
         sendMessage(senderID,"Hey! I’m Wingbot. I can help you write your online dating Profile");
+        if (user.name === " ") {
+            stateOftheApp.state[0] = 1;
+        }
         sendMessage(senderID,"What should I call you?");
-        stateOftheApp.state[0] = 1;
         break;
       case 1:
         user.name = messageText;
@@ -688,7 +690,7 @@ function isNegative(message){
   client.call('analyzesentiment',dataSentiment, function(err,resp,body){
     if(!err){
       var score = resp.body.aggregate.score;
-      console.log("pre check");
+      console.log("negative check");
       if(score > 0){
         //console.log('false')
         return false;
