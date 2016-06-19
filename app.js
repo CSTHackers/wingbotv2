@@ -271,7 +271,7 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
-  console.log("before if message");
+  console.log("message: "+messageText);
   if (messageText) {
     //sendMessage(senderID,messageText);
     //sendMessage(senderID, messageText);
@@ -287,7 +287,6 @@ function receivedMessage(event) {
               sendMessage(senderID,"What should I call you?");
               stateOftheApp.state[0] = 1;
         } else stateOftheApp.state[1] = 1;
-
         break;
       case 1:
         user.name = messageText;
