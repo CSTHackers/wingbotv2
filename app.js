@@ -3,9 +3,9 @@
 
 /* Nolan Begin */
 
-/*var catKey = require('./categoriesKey.js');*/
+var catKey = require('./categoriesKey.js');
 var wingbot = require('./wingbot.js');
-var haven = require('./haven.js');
+var haven = require('./HavenOnDemand.js');
 
 /* Nolan End */
 
@@ -13,21 +13,21 @@ var haven = require('./haven.js');
 
 //user object to store information given
 var user  = {
-  name = "";
-  gender ="";
-  facts = {" "};
-}
+  name: "",
+  gender:"",
+  facts:[" "]
+};
 
 var stateOftheApp = {
-  state = {0,0};
-  catPool = 0;
-  userAnswer = "";
-}
+  state:[0,0],
+  catPool:0,
+  userAnswer: ""
+};
 
-var openEndedQuestions = {"Tell me one interesting thing about yourself.",
+var openEndedQuestions = ["Tell me one interesting thing about yourself.",
                   "What can you do better than anyone else?",
                   "What do you do for fun?",
-                  "empty string for test"};
+                  "empty string for test"];
 
 
 
@@ -49,7 +49,7 @@ function chooseGender() {
                 "type":"postback",
                 "title":"Female",
                 "payload":"gender_Female"
-              }
+              },
               {
                 "type":"postback",
                 "title":"Dinousar",
@@ -59,7 +59,7 @@ function chooseGender() {
           }
         }
   };
-  stateOftheApp.state = {0,0};
+  stateOftheApp.state = [0,0];
   sendMessage(message);
   //try to see if it works putting this function here that calls the first open ended question:
   askOpenEndedQuestion();
@@ -67,7 +67,7 @@ function chooseGender() {
 
 //function called to get bot to give you one of the open ended questions:
 function askOpenEndedQuestion() {
-  stateOftheApp.state = {1,0};
+  stateOftheApp.state = [1,0];
   var random = Math.floor(Math.random() * openEndedQuestions.length());
   sendMessage(openEndedQuestions[random]);
   openEndedQuestions.splice(random, 1);
@@ -76,8 +76,8 @@ function askOpenEndedQuestion() {
 //function called when wanting to assign points to categoriesKey
 function fitInCategory(message) {
   var poolOutcomes = catKey.checkIfPool(message);
-  for (int i = 0;i<poolOutcomes.length(); i++) {
-    if
+  for (var i = 0;i<poolOutcomes.length(); i++) {
+
   }
 }
 
@@ -247,7 +247,7 @@ function receivedAuthentication(event) {
 
   // When an authentication is received, we'll send a message back to the sender
   // to let them know it was successful.
-  sendTextMessage(senderID, "Authentication successful");
+  sendMessage(senderID, "Authentication successful");
 }
 
 
@@ -290,12 +290,12 @@ function receivedMessage(event) {
     switch (stateOftheApp.state[0]) {
       case 0:
         user.name = messageText;
-        sendMessage("Hey "+userName+"! I’m Wingbot. I can help you write your online dating Profile");
+        sendMessage("Hey "+user.name+"! I’m Wingbot. I can help you write your online dating Profile");
         chooseGender();
         break;
       case 1:
-        if (stateOftheApp.state[1] == 0) {
-          if (isNegative(messageText)) {
+        if (stateOftheApp.state[1] === 0) {
+          if (haven.isNegative(messageText)) {
             sendMessage(yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
             stateOftheApp.userAnswer = messageText;
           } else {
@@ -315,8 +315,9 @@ function receivedMessage(event) {
         break;
 
       default:
-        sendTextMessage(senderID, messageText);
+        sendMessage(senderID, "Excuse I did not quite get that, can you repeat?");
     }
+  }
 }
 
 
@@ -371,7 +372,7 @@ function receivedPostback(event) {
         sendMessage("Ok, then I will use this fact to write your About me.");
         user.facts.push(stateOftheApp.userAnswer);
       } else {
-        stateOftheApp.state = {1,1};
+        stateOftheApp.state = [1,1];
       }
   }
 
@@ -380,7 +381,7 @@ function receivedPostback(event) {
 
   // When a postback is called, we'll send a message back to the sender to
   // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
+  sendMessage(senderID, "Postback called");
 }
 
 
