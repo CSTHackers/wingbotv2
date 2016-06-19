@@ -870,7 +870,7 @@ function checkIfPool(message) {
 function splitStringforKeys (message) {
   var temp = new Array();
   temp = message.split(" ");
-  for(var i = 0; i < temp.length(); i++){
+  for(var i = 0; i < temp.length; i++){
      if(temp[i] === "." || temp[i] === "," || temp[i] === "!") temp.splice(i,1);
   }
   return temp;
