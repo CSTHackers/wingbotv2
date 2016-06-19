@@ -76,7 +76,7 @@ app.post('/webhook', function (req, res) {
   var data = req.body;
 
   // Make sure this is a page subscription
-  if (data.object == 'page') {
+  if (data.object === 'page') {
     // Iterate over each entry
     // There may be multiple if batched
     data.entry.forEach(function(pageEntry) {
@@ -699,11 +699,11 @@ function isNegative(message){
       var score = resp.body.aggregate.score;
       console.log("negative check");
       if(score > 0){
-        //console.log('false')
+        console.log('false')
         return false;
       }
       else{
-        //console.log('true')
+        console.log('true')
         return true;
       }
     }
