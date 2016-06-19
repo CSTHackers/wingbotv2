@@ -73,14 +73,6 @@ function askOpenEndedQuestion() {
   openEndedQuestions.splice(random, 1);
 }
 
-//function called when wanting to assign points to categoriesKey
-function fitInCategory(message) {
-  var poolOutcomes = catKey.checkIfPool(message);
-  for (var i = 0;i<poolOutcomes.length(); i++) {
-
-  }
-}
-
 /*
 Connections to the API Facebook Starts here:
  *
@@ -300,10 +292,11 @@ function receivedMessage(event) {
             stateOftheApp.userAnswer = messageText;
           } else {
             user.facts.push(messageText);
-            fitInCategory(messageText);
+            stateOftheApp.catPool = catKey.checkIfPool(messageText);
           }
         } else {
           user.facts.push(messageText);
+          stateOftheApp.catPool = catKey.checkIfPool(messageText);
         }
         break;
       case 2:

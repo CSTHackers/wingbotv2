@@ -32,6 +32,7 @@ function checkPersonalityType (keyword) {
    if(matchKeywords(keyword, Foodie)) return Foodie.index;
    if(matchKeywords(keyword, STEMnerd)) return STEMnerd.index;
    if(matchKeywords(keyword, BigNerd)) return BigNerd.index;
+   else return 0;
 }
 
 //returns boolean true/false if the object passed has keys that matches the keyword
@@ -59,7 +60,7 @@ function checkIfPool(message) {
   for (int i =0; i<wordsArray.length; i++) {
     if(checkPersonalityType(wordsArray[i]) !=0) poolsMentioned.push(checkPersonalityType(wordsArray[i]);
   }
-  var 
+  var
   return pool;
 }
 
