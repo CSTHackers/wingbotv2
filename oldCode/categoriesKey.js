@@ -20,7 +20,7 @@ var NPRnerd = {
               "Do you enjoy having academic conversations with other people?"],
   subQuestions:["What are some of the books made it onto your shelf?", "Which ones do you tune into regularly?", "Why?", "Which ones?", "What subjects do you enjoy talking about the most?"],
   answeredQuestions:["I am an avid reader. If you look on my shelf you can find # among other favorites. There’s always room for more though: send me all your recommendations!",
-                  "Like most people, I’m a great listener: especially when it comes to #, and occasionally real people."
+                  "Like most people, I’m a great listener: especially when it comes to #, and occasionally real people.",
                   "Some days I wish I could be more #. Life goals. I know. I’m an idealist: what can I say?",
                   "I care a lot about #. Sure, the pay isn’t much but I get to feel like I’m saving the world. Go me!",
                   "To me, the best kind of conversation is a smart conversation. I’m always up for chatting about # any day of the week. Yes, people: I am asking you to talk nerdy to me."],
@@ -31,8 +31,8 @@ var Foodie ={
   index:3,
   keywords: [""],
   questions:["Do you have a favorite food?", "What’s the weirdest thing you’ve ever eaten?" ],
-  subQuestions:["What is it?", ],
-  answeredQuestions:["I love (insert favorite food). Take notes, if you want the way to my heart: it’s through my stomach.", ],
+  subQuestions:["What is it?"],
+  answeredQuestions:["I love (insert favorite food). Take notes, if you want the way to my heart: it’s through my stomach."],
   statement: ""
 };
 var STEMnerd= {
@@ -90,10 +90,10 @@ function checkIfPool(message) {
   for (var i =0; i<wordsArray.length; i++) {
     if(checkPersonalityType(wordsArray[i]) !==0) poolsMentioned.push(checkPersonalityType(wordsArray[i]));
   }
-  for (var i =0; i<poolsMentioned.length; i++){
-    var tempNum = poolsMentioned[i];
+  for (var k =0; i<poolsMentioned.length; i++){
+    var tempNum = poolsMentioned[k];
     for (var j =poolsMentioned.length; j >=0; j--) {
-      if (j !== i) {
+      if (j !== k) {
         if (poolsMentioned[j] === tempNum) repeated = tempNum;
       }
     }
