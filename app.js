@@ -300,19 +300,20 @@ function receivedMessage(event) {
         break;
       case 2:
       console.log("inside case 2");
-      console.log("app state: "+stateOftheApp.state);
-      console.log("message: "+messageText);
+
       //counterHell = 0;
         if (stateOftheApp.state[1] === 0) {
           if (isNegative(messageText)) {
             sendMessage(senderID,"This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?");
             stateOftheApp.userAnswer = messageText;
           } else {
+            console.log("app state: "+stateOftheApp.state);
+            console.log("message: "+messageText);
             if(stateOftheApp.state[0] === 2) sendMessage(senderID,getReaction());
             console.log("passed Reactions");
             //user.facts.push(messageText);
             console.log("check if pool "+checkIfPool(messageText));
-            //stateOftheApp.catPool = checkIfPool(messageText);
+            stateOftheApp.catPool = 4;
             askKeyquestions(event);
           }
         } else {
