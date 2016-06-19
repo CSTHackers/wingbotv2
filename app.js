@@ -280,11 +280,14 @@ function receivedMessage(event) {
     switch (stateOftheApp.state[0]) {
       case 0:
         console.log("case 0");
-        user.name = messageText;
         sendMessage(senderID,"Hey! I’m Wingbot. I can help you write your online dating Profile");
         sendMessage(senderID,"What should I call you?");
-        chooseGender(event);
+        stateOftheApp.state[0] = 1;
         break;
+      case 1:
+        user.name = messageText;
+        sendMessage(senderID, "Nice to meet you "+messageText);
+        chooseGender(event);
       case 2:
         if (stateOftheApp.state[1] === 0) {
           if (isNegative(messageText)) {
