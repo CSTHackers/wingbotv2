@@ -5,7 +5,6 @@ var catKey = require('./categoriesKey.js');
 //var wingbot = require('./wingbot.js');
 var haven = require('./HavenOnDemand.js');
 
-var https = require('https');
 var privateKey  = fs.readFileSync('./ssl/privkey.pem');
 var certificate = fs.readFileSync('sslcert/cert.pem');
 
