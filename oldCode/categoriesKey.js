@@ -56,11 +56,12 @@ var BigNerd= {
   count: 0,
   index:5,
   keywords: ["videogame", "videogames", "geek", "tv shows", "movies", "comics", "anime", "manga", "fiction", ""],
-  questions:["What is your gaming platform of choice?", "Do you belong to any fandoms?","Are you into any board games?","What is your favorite genre?"],
-  subQuestions:["What multi-player game have you been playing the most?", "What are your top three?","Which one do you play the most?" ,"What was the book, movie, TV show that got you into it?"],
+  questions:["What is your gaming platform of choice?", "Do you belong to any fandoms?","Are you into any board games?","What is your favorite genre?", "Do you visit any sort of geeky convention?"],
+  subQuestions:["What multi-player game have you been playing the most?", "What are your top three?","Which one do you play the most?" ,"What was the book, movie, TV show that got you into it?", "Which one do you like attending the most?"],
   answeredQuestions:[" In case you’re wondering about our gaming compatibility. If you’re ever up for a game, I’ve been playing a lot of # and will happily kick your ass any day of the week.",
                     "Just in case you haven’t guessed, I am indeed a thoroughbred geek. Hit me up with your gifs, fanfiction or references, I will gladly take anything related to #.",
-                    "Tabletop is definitely one of the places I feel most at home, especially when I break out my copy of #. Sure, I know it might not be for, but for me it’s an awesome way to find people to roll with."],
+                    "Tabletop is definitely one of the places I feel most at home, especially when I break out my copy of #. Sure, I know it might not be for, but for me it’s an awesome way to find people to roll with.", " If I had to describe my primary geekdom, I’d probably classify myself as a super geek. Personally, I blame # for the addiction.",
+                    "If you’re looking for me during the con season, you’ll probably find me at # making new friends and having the time of my life. And in case you’re wondering, yes: the con flu is always worth it."],
   statement: ""
 };
 
