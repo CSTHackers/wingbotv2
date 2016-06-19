@@ -310,7 +310,7 @@ function receivedMessage(event) {
           } else {
             if(stateOftheApp.state[0] === 2) sendMessage(senderID,getReaction());
             console.log(messageText);
-            user.facts.push(messageText);
+            //user.facts.push(messageText);
             console.log("check if pool "+checkIfPool(messageText));
             stateOftheApp.catPool = checkIfPool(messageText);
             askKeyquestions(event);
