@@ -1,4 +1,5 @@
 //Main logic code of wingbot
+var HavenOnDemand = require('./HavenOnDemand.js')
 var catKey = require('./categoriesKey.js');
 
 //user object to store information given
