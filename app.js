@@ -5,6 +5,12 @@ var catKey = require('./categoriesKey.js');
 //var wingbot = require('./wingbot.js');
 var haven = require('./HavenOnDemand.js');
 
+var https = require('https');
+var privateKey  = fs.readFileSync('./ssl/privkey.pem');
+var certificate = fs.readFileSync('sslcert/cert.pem');
+
+var credentials = {key: privateKey, cert: certificate};
+
 /* Nolan End */
 
 const
@@ -681,9 +687,23 @@ function end () {
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid
 // certificate authority.
-app.listen(app.get('port'), function() {
+
+/* Nolan Start */
+
+/*app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
+});*/
+
+var httpsServer = https.createServer(credentials, app, function() {
+  console.log('Listening on port: ' + app.get('port'));
 });
+
+/* Nolan End */
+
+
+
+
+
 
 module.exports = app;
 
