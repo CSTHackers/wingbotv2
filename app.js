@@ -1,6 +1,5 @@
 /* jshint esversion: 6 */
-/* jshint node: true, devel: true */
-'use strict';
+
 
 const
   bodyParser = require('body-parser'),
