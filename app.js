@@ -213,36 +213,11 @@ function addVariableToString(answer, string) {
 
 //chooseGender function where 3 buttons are shown and the user chooses their prefered gender
 function chooseGender(event) {
+  console.log("got to the chooseGender function");
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
-  var  message = {
-      "attachment":{
-          "type":"template",
-          "payload":{
-              "template_type":"button",
-              "text":"Awesome! What gender speaks to you the most?",
-              "buttons":[
-              {
-                "type":"postback",
-                "title":"Male",
-                "payload":"male"
-              },
-              {
-                "type":"postback",
-                "title":"Female",
-                "payload":"female"
-              },
-              {
-                "type":"postback",
-                "title":"Dinousar",
-                "payload":"neutral"
-              }
-              ]
-          }
-        }
-  };
-  stateOftheApp.state = [0,0];
-  sendMessage(senderID,message);
+  sendButtonMessage(senderID);
+  stateOftheApp.state = [1,0];
   //try to see if it works putting this function here that calls the first open ended question:
   askOpenEndedQuestion(event);
 }
@@ -494,15 +469,19 @@ function sendButtonMessage(recipientId) {
         type: "template",
         payload: {
           template_type: "button",
-          text: "This is test text",
+          text: "Awesome! What gender speaks to you the most?",
           buttons:[{
-            type: "web_url",
-            url: "https://www.oculus.com/en-us/rift/",
-            title: "Open Web URL"
+            type: "postback",
+            title: "Man",
+            payload: "man"
           }, {
             type: "postback",
-            title: "Call Postback",
-            payload: "Developer defined postback"
+            title: "Woman",
+            payload: "women"
+          },{
+            type: "postback",
+            title: "Dinousar",
+            payload: "dinousar"
           }]
         }
       }
