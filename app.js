@@ -314,12 +314,12 @@ function receivedMessage(event) {
             //user.facts.push(messageText);
             //console.log("check if pool "+checkIfPool(messageText));
             stateOftheApp.catPool = 4;
-            //askKeyquestions(event);
+            askKeyquestions(event);
           }
         } else {
           sendMessage(senderID,getReaction());
           //user.facts.push(messageText);
-          stateOftheApp.catPool = 4;
+          //stateOftheApp.catPool = checkIfPool(messageText);
         }
         break;
       case 3:
