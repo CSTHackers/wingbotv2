@@ -312,13 +312,13 @@ function receivedMessage(event) {
             console.log("passed Reactions");
             //user.facts.push(messageText);
             console.log("check if pool "+checkIfPool(messageText));
-            stateOftheApp.catPool = checkIfPool(messageText);
+            //stateOftheApp.catPool = checkIfPool(messageText);
             askKeyquestions(event);
           }
         } else {
           sendMessage(senderID,getReaction());
-          user.facts.push(messageText);
-          stateOftheApp.catPool = checkIfPool(messageText);
+          //user.facts.push(messageText);
+          //stateOftheApp.catPool = checkIfPool(messageText);
         }
         break;
       case 3:
