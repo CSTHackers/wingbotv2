@@ -13,7 +13,7 @@ var credentials = {key: privateKey, cert: certificate};
 
 /* Nolan End */
 
-const
+var
   bodyParser = require('body-parser'),
   config = require('config'),
   crypto = require('crypto'),
@@ -694,9 +694,7 @@ function end () {
   console.log('Node app is running on port', app.get('port'));
 });*/
 
-var httpsServer = https.createServer(credentials, app, function() {
-  console.log('Listening on port: ' + app.get('port'));
-});
+https.createServer(credentials, app).listen(8443);
 
 /* Nolan End */
 
