@@ -43,20 +43,22 @@ var STEMnerd= {
   count: 0,
   index:4,
   keywords: ["science", "nerd", "code", "tech", "technology", "bot", "API", "experiments", "logic", "apps", "engineering", "school", "puzzles", "math", "scientists", "doctor"],
-  questions:["Are you a scientist, doctor, or engineer?", "Do you follow any celebrity scientists?", "Have you ever survived a hackathon?", "Do you have a favorite gadget?"],
-  subQuestions:["What’s is your area of specialty?", "Which ones are your favorites?" ,"What did you make?", "What is it?"],
-  answeredQuestions:"In my professional life I am a #. My parents are definitely proud of me. My wallet however is another story.",
+  questions:["Are you a scientist, doctor, or engineer?", "Do you follow any celebrity scientists?", "Have you ever survived a hackathon?", "Do you have a favorite gadget?",
+            "Do you enjoy math and calculus courses?"],
+  subQuestions:["What’s is your area of specialty?", "Which ones are your favorites?" ,"What did you make?", "What is it?", "What was your latest favorite course?"],
+  answeredQuestions:["In my professional life I am a #. My parents are definitely proud of me. My wallet however is another story.",
                     "I’m a huge fan of science. # is my god. Yes, I am a nerd. Live it. Love it. Embrace it.",
-                    " Fun fact: I’ve been to a hackathon and survived it on free food, caffeine, and no shortage of goodwill. Managed to build a # to boot as well. If you’re at all curious, you can message and I would love to show it to you!", "SI have to admit, I’m also in love with my #. If this causes any problems in our potential relationship, I apologize in advance."],
+                    " Fun fact: I’ve been to a hackathon and survived it on free food, caffeine, and no shortage of goodwill. Managed to build a # to boot as well. If you’re at all curious, you can message and I would love to show it to you!", "SI have to admit, I’m also in love with my #. If this causes any problems in our potential relationship, I apologize in advance.",
+                    "I’ll admit, I do find numbers a bit sexy. Like # sexy. And yet, in spite of all that, I probably could still use some help getting my taxes done. Oh well."],
   statement: ""
 };
 var BigNerd= {
   count: 0,
   index:5,
-  keywords: [""],
-  questions:[],
-  subQuestions:[],
-  answeredQuestions:[],
+  keywords: ["videogame", "videogames", "geek", "tv shows", "movies", "comics", "anime", "manga", "fiction", ""],
+  questions:["What is your gaming platform of choice?"],
+  subQuestions:["What multi-player game have you been playing the most?" ],
+  answeredQuestions:[" In case you’re wondering about our gaming compatibility. If you’re ever up for a game, I’ve been playing a lot of # and will happily kick your ass any day of the week."],
   statement: ""
 };
 
