@@ -1,4 +1,5 @@
 /* jshint node: true, devel: true */
+/*jshint esversion: 6 */
 'use strict';
 
 const
@@ -157,14 +158,14 @@ function receivedAuthentication(event) {
 
   // When an authentication is received, we'll send a message back to the sender
   // to let them know it was successful.
-  sendTextMessage(senderID, "Authentication successful");
+  sendMessage(senderID, "Authentication successful");
 }
 
 /* Nolan Begin */
 //var HavenOnDemand = require('./HavenOnDemand.js')
-var catKey = require('./oldCode/categoriesKey.js');
+var catKey = require('./categoriesKey.js');
 //var wingbot = require('./wingbot.js');
-var haven = require('./oldCode/HavenOnDemand.js');
+var haven = require('./HavenOnDemand.js');
 
 /* Nolan End */
 
