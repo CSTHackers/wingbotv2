@@ -309,7 +309,7 @@ function receivedMessage(event) {
             stateOftheApp.userAnswer = messageText;
           } else {
             if(stateOftheApp.state[0] === 2) sendMessage(senderID,getReaction());
-            console.log(messageText);
+            console.log("passed Reactions");
             //user.facts.push(messageText);
             console.log("check if pool "+checkIfPool(messageText));
             stateOftheApp.catPool = checkIfPool(messageText);
