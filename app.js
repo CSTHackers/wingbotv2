@@ -205,16 +205,19 @@ function addVariableToString(answer, string) {
   return string.replace("#", answer);
 }
 
+var counterHell=0;
 //chooseGender function where 3 buttons are shown and the user chooses their prefered gender
 function chooseGender(event) {
   console.log("got to the chooseGender function");
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
   sendButtonMessage(senderID);
-  stateOftheApp.state = [1,0];
-  //try to see if it works putting this function here that calls the first open ended question:
-  console.log("got to the chooseGender function");
-  askOpenEndedQuestion(event);
+  if (counterHell === 1) {
+    stateOftheApp.state = [2,0];
+    //try to see if it works putting this function here that calls the first open ended question:
+    console.log("got to the chooseGender function");
+    askOpenEndedQuestion(event);
+  }
 }
 
 //function called to get bot to give you one of the open ended questions:
@@ -280,6 +283,7 @@ function receivedMessage(event) {
       case 0:
         console.log("case 0");
         sendMessage(senderID,"Hey! I’m Wingbot. I can help you write your online dating Profile");
+        user.name = " ";
         if (user.name === " ") {
             stateOftheApp.state[0] = 1;
             sendMessage(senderID,"What should I call you?");
@@ -493,8 +497,8 @@ function sendButtonMessage(recipientId) {
       }
     }
   };
-
   callSendAPI(messageData);
+
 }
 
 /*
@@ -666,6 +670,7 @@ function yesOrNoButtons(title) {
          }
    };
    sendMessage(message);
+   counterHell++;
 }
 
 
