@@ -286,7 +286,7 @@ function receivedMessage(event) {
               sendMessage(senderID,"What should I call you?");
               stateOftheApp.state[0] = 1;
         } else stateOftheApp.state[1] = 1;
-        
+
         break;
       case 1:
         user.name = messageText;
@@ -394,7 +394,7 @@ function receivedPostback(event) {
       sendMessage(senderID, "Ok, "+payload+" pronouns it is!!");
       askOpenEndedQuestion(event);
     }
-}
+
 
   console.log("Received postback for user %d and page %d with payload '%s' " +
     "at %d", senderID, recipientID, payload, timeOfPostback);
