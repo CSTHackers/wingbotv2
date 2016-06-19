@@ -166,7 +166,7 @@ function receivedAuthentication(event) {
 
 //user object to store information given
 var user  = {
-  name: "",
+  name: "berta",
   gender:"neutral",
   facts:[" "],
   answeredQuestions: [""]
@@ -215,14 +215,14 @@ function chooseGender(event) {
   stateOftheApp.state = [1,0];
   //try to see if it works putting this function here that calls the first open ended question:
   console.log("got to the chooseGender function");
-  //askOpenEndedQuestion(event);
+  askOpenEndedQuestion(event);
 }
 
 //function called to get bot to give you one of the open ended questions:
 function askOpenEndedQuestion(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
-  if (stateOftheApp.state[0] === 0) stateOftheApp.state = [1,0];
+  if (stateOftheApp.state[0] === 1) stateOftheApp.state = [2,0];
   var random = Math.floor(Math.random() * openEndedQuestions.length);
   sendMessage(senderID,openEndedQuestions[random]);
   openEndedQuestions.splice(random, 1);
@@ -231,7 +231,7 @@ function askOpenEndedQuestion(event) {
 function askKeyquestions(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
-  if (stateOftheApp.state[0] === 1) stateOftheApp.state = [2,0];
+  if (stateOftheApp.state[0] === 2) stateOftheApp.state = [3,0];
   var chosenPool = getObject(stateOftheApp.catPool);
   var random = Math.floor(Math.random() * chosenPool.questions.length);
   stateOftheApp.secondQuestion = random;
@@ -281,10 +281,11 @@ function receivedMessage(event) {
       case 0:
         console.log("case 0");
         user.name = messageText;
-        sendMessage(senderID,"Hey "+user.name+"! I’m Wingbot. I can help you write your online dating Profile");
+        sendMessage(senderID,"Hey! I’m Wingbot. I can help you write your online dating Profile");
+        sendMessage(senderID,"What should I call you?");
         chooseGender(event);
         break;
-      case 1:
+      case 2:
         if (stateOftheApp.state[1] === 0) {
           if (isNegative(messageText)) {
             sendMessage(senderID,yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
@@ -301,7 +302,7 @@ function receivedMessage(event) {
           stateOftheApp.catPool = checkIfPool(messageText);
         }
         break;
-      case 2:
+      case 3:
         var chosenPool = getObject(stateOftheApp.catPool);
         if (stateOftheApp.state[1] === 0) {
           if (isNegative(messageText)) {
