@@ -312,19 +312,16 @@ function receivedMessage(event) {
             if(stateOftheApp.state[0] === 2) sendMessage(senderID,getReaction());
             console.log("passed Reactions");
             //user.facts.push(messageText);
-<<<<<<< HEAD
             //console.log("check if pool "+checkIfPool(messageText));
-            stateOftheApp.catPool = 4;
-=======
-            console.log("check if pool "+checkIfPool(messageText));
-            stateOftheApp.catPool = checkIfPool(messageText);
->>>>>>> parent of 370e721... trying little things
-            askKeyquestions(event);
+            //stateOftheApp.catPool = 4;
+            //console.log("check if pool "+checkIfPool(messageText));
+            //stateOftheApp.catPool = checkIfPool(messageText);
+            //askKeyquestions(event);
           }
         } else {
           sendMessage(senderID,getReaction());
-          user.facts.push(messageText);
-          stateOftheApp.catPool = checkIfPool(messageText);
+          //user.facts.push(messageText);
+          //stateOftheApp.catPool = checkIfPool(messageText);
         }
         break;
       case 3:
