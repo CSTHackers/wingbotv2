@@ -7,7 +7,7 @@ var haven = require('./HavenOnDemand.js');
 
 var fs = require('fs');
 var privateKey  = fs.readFileSync('./ssl/privkey.pem');
-var certificate = fs.readFileSync('sslcert/cert.pem');
+var certificate = fs.readFileSync('./ssl/cert.pem');
 
 var credentials = {key: privateKey, cert: certificate};
 
