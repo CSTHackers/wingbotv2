@@ -216,7 +216,6 @@ function chooseGender(event) {
     stateOftheApp.state = [2,0];
     //try to see if it works putting this function here that calls the first open ended question:
     console.log("got to the chooseGender function");
-    askOpenEndedQuestion(event);
   }
 }
 
@@ -283,7 +282,7 @@ function receivedMessage(event) {
       case 0:
         console.log("case 0");
         sendMessage(senderID,"Hey! I’m Wingbot. I can help you write your online dating Profile");
-        if (user.name === " ") {
+        if (messageText === "hello") {
             stateOftheApp.state[0] = 1;
             sendMessage(senderID,"What should I call you?");
         }
@@ -392,6 +391,7 @@ function receivedPostback(event) {
   switch (stateOftheApp.state[0]) {
     case 1:
       user.gender = payload;
+      askOpenEndedQuestion(event);
       break;
     // case 0:
     //   if(payload == "Yes") {
