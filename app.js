@@ -248,7 +248,7 @@ function chooseGender() {
 //function called to get bot to give you one of the open ended questions:
 function askOpenEndedQuestion() {
   if (stateOftheApp.state[0] === 0) stateOftheApp.state = [1,0];
-  var random = Math.floor(Math.random() * openEndedQuestions.length());
+  var random = Math.floor(Math.random() * openEndedQuestions.length;
   sendMessage(openEndedQuestions[random]);
   openEndedQuestions.splice(random, 1);
 }
@@ -256,7 +256,7 @@ function askOpenEndedQuestion() {
 function askKeyquestions() {
   if (stateOftheApp.state[0] === 1) stateOftheApp.state = [2,0];
   var chosenPool = catKey.getObject(stateOftheApp.catPool);
-  var random = Math.floor(Math.random() * chosenPool.questions.length());
+  var random = Math.floor(Math.random() * chosenPool.questions.length;
   stateOftheApp.secondQuestion = random;
   sendMessage(chosenPool.questions[random]);
   chosenPool.questions.splice(random, 1);
@@ -294,6 +294,7 @@ function receivedMessage(event) {
 
 
   if (messageText) {
+    sendMessage(messageText);
 
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
@@ -349,7 +350,7 @@ function receivedMessage(event) {
 
       default:
         sendMessage(senderID, "Excuse I did not quite get that, can you repeat?");
-    } getReaction();
+    }
   }
 }
 
@@ -456,6 +457,20 @@ function sendMessage(recipientId, messageText) {
 
   callSendAPI(messageData);
 }
+
+function sendMessage( messageText) {
+  var messageData = {
+    recipient: {
+      id: "recipientId"
+    },
+    message: {
+      text: messageText
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
 
 /*
  * Send a button message using the Send API.
