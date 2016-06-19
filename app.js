@@ -292,24 +292,25 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
-  Console.log("before if message");
+  console.log("before if message");
   if (messageText) {
-    sendMessage(messageText);
+    sendMessage(senderID,messageText);
     sendMessage(senderID, messageText);
-    Console.log("before if message");
+    console.log("after two echos");
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (stateOftheApp.state[0]) {
       case 0:
+        console.log("case 0");
         user.name = messageText;
-        sendMessage("Hey "+user.name+"! I’m Wingbot. I can help you write your online dating Profile");
+        sendMessage(senderID,"Hey "+user.name+"! I’m Wingbot. I can help you write your online dating Profile");
         chooseGender();
         break;
       case 1:
         if (stateOftheApp.state[1] === 0) {
           if (haven.isNegative(messageText)) {
-            sendMessage(yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
+            sendMessage(senderID,yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
             stateOftheApp.userAnswer = messageText;
           } else {
             getReaction();
@@ -333,7 +334,7 @@ function receivedMessage(event) {
           } else {
             //if they like the first question we send the subquestion:
             stateOftheApp.state[1] = 1;
-            sendMessage(chosenPool.subquestion[stateOftheApp.secondQuestion]);
+            sendMessage(senderID,chosenPool.subquestion[stateOftheApp.secondQuestion]);
           }
         } else {
           //if this is a repeat it means user is answering subquestion; we store the answeredQuestions and count++ to that pool
@@ -459,10 +460,10 @@ function sendMessage(recipientId, messageText) {
   callSendAPI(messageData);
 }
 
-function sendMessage( messageText) {
+function sendMessage(recipientId, messageText) {
   var messageData = {
     recipient: {
-      id: "recipientId"
+      id: recipientId
     },
     message: {
       text: messageText
