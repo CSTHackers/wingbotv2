@@ -931,3 +931,4 @@ function addPointsToPersonality (poolId) {
     default: return 0;
   }
 }
+/* Nolan <3 AngelHack */
