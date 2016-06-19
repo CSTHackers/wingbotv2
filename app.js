@@ -1,5 +1,5 @@
+/* jshint esversion: 6 */
 /* jshint node: true, devel: true */
-/*jshint esversion: 6 */
 'use strict';
 
 const

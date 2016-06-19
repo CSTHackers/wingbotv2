@@ -24,7 +24,7 @@ var NPRnerd = {
                   "Some days I wish I could be more #. Life goals. I know. I’m an idealist: what can I say?",
                   "I care a lot about #. Sure, the pay isn’t much but I get to feel like I’m saving the world. Go me!",
                   "To me, the best kind of conversation is a smart conversation. I’m always up for chatting about # any day of the week. Yes, people: I am asking you to talk nerdy to me."],
-  statement: ""
+  statement: "In short: nerd out with me a bit and let’s see where this goes."
 };
 var Foodie ={
   count: 0,
@@ -37,7 +37,7 @@ var Foodie ={
                     " I’m always open to trying new places, but I can get enough of #. If you’ve been there, you know what I’m talking about. If not: prepare yourself for a whole new world of delicious.",
                     " I find people cooking food kind of awesome. Just set me up with a TV, turn on some # and you’ll have me salivating in seconds.",
                     "Yes, I do have a kitchen and I’m not afraid to use it. If you’re lucky enough, I’ll make you a # but be warned: I don’t just make it for anyone."],
-  statement: ""
+  statement: "In short: feed me. I will totally love you for it."
 };
 var STEMnerd= {
   count: 0,
@@ -50,7 +50,7 @@ var STEMnerd= {
                     "I’m a huge fan of science. # is my god. Yes, I am a nerd. Live it. Love it. Embrace it.",
                     " Fun fact: I’ve been to a hackathon and survived it on free food, caffeine, and no shortage of goodwill. Managed to build a # to boot as well. If you’re at all curious, you can message and I would love to show it to you!", "SI have to admit, I’m also in love with my #. If this causes any problems in our potential relationship, I apologize in advance.",
                     "I’ll admit, I do find numbers a bit sexy. Like # sexy. And yet, in spite of all that, I probably could still use some help getting my taxes done. Oh well."],
-  statement: ""
+  statement: "In short: let’s find out if this whole love thing can work out between us. For science."
 };
 var BigNerd= {
   count: 0,
