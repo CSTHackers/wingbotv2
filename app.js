@@ -392,7 +392,6 @@ function receivedPostback(event) {
   switch (stateOftheApp.state[0]) {
     case 1:
       user.gender = payload;
-      counterHell++;
       break;
     // case 0:
     //   if(payload == "Yes") {
@@ -497,6 +496,7 @@ function sendButtonMessage(recipientId) {
       }
     }
   };
+  counterHell++;
   callSendAPI(messageData);
 
 }
