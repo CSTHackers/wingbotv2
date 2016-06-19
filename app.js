@@ -172,7 +172,7 @@ function receivedAuthentication(event) {
 //user object to store information given
 var user  = {
   name: "",
-  gender:"",
+  gender:"neutral",
   facts:[" "],
   answeredQuestions: [""]
 };
@@ -349,7 +349,7 @@ function receivedMessage(event) {
 
       default:
         sendMessage(senderID, "Excuse I did not quite get that, can you repeat?");
-    }
+    } getReaction();
   }
 }
 
