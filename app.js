@@ -1,12 +1,3 @@
-/*
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 /* jshint node: true, devel: true */
 'use strict';
 
@@ -18,12 +9,100 @@ var haven = require('./haven.js');
 
 /* Nolan End */
 
-const 
+/*LOGIC of the bot*/
+
+//user object to store information given
+var user  = {
+  name = "";
+  gender ="";
+  facts = {" "};
+}
+
+var stateOftheApp = {
+  state = {0,0};
+  catPool = 0;
+  userAnswer = "";
+}
+
+var openEndedQuestions = {"Tell me one interesting thing about yourself.",
+                  "What can you do better than anyone else?",
+                  "What do you do for fun?",
+                  "empty string for test"};
+
+//function that asks userName from the user
+function getUserName () {
+    sendMessage("Oh hey there, what’s your name?");
+
+    sendMessage("Hey "+userName+"! I’m Wingbot. Want some help writing your dating profile?");
+    if (getAnswer()=="NO" || getAnswer()=="no") {
+                        sendMessage("Ok. But if you do, I’ll be around. Catch you later!");
+                        end();
+                    } else {
+                      chooseGender();
+                    }
+}
+
+//chooseGender function where 3 buttons are shown and the user chooses their prefered gender
+function chooseGender() {
+ var  message = {
+      "attachment":{
+          "type":"template",
+          "payload":{
+              "template_type":"button",
+              "text":"Awesome! What gender speaks to you the most?",
+              "buttons":[
+              {
+                "type":"postback",
+                "title":"Male",
+                "payload":"gender_Male"
+              },
+              {
+                "type":"postback",
+                "title":"Female",
+                "payload":"gender_Female"
+              }
+              {
+                "type":"postback",
+                "title":"Dinousar",
+                "payload":"gender_Neutral"
+              }
+              ]
+          }
+        }
+  };
+  stateOftheApp.state = {0,0};
+  sendMessage(message);
+  //try to see if it works putting this function here that calls the first open ended question:
+  askOpenEndedQuestion();
+}
+
+//function called to get bot to give you one of the open ended questions:
+function askOpenEndedQuestion() {
+  stateOftheApp.state = {1,0};
+  var random = Math.floor(Math.random() * openEndedQuestions.length());
+  sendMessage(openEndedQuestions[random]);
+  openEndedQuestions.splice(random, 1);
+}
+
+//function called when wanting to assign points to categoriesKey
+function fitInCategory(message) {
+  var poolOutcomes = catKey.checkIfPool(message);
+  for (int i = 0;i<poolOutcomes.length(); i++) {
+    if
+  }
+}
+
+/*
+Connections to the API Facebook Starts here:
+ *
+ */
+
+const
   bodyParser = require('body-parser'),
   config = require('config'),
   crypto = require('crypto'),
   express = require('express'),
-  https = require('https'),  
+  https = require('https'),
   request = require('request');
 
 var app = express();
@@ -33,13 +112,13 @@ app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
 /*
- * Be sure to setup your config values before running this code. You can 
+ * Be sure to setup your config values before running this code. You can
  * set them using environment variables or modifying the config file in /config.
  *
  */
 
 // App Secret can be retrieved from the App Dashboard
-const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
+const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ?
   process.env.MESSENGER_APP_SECRET :
   config.get('appSecret');
 
@@ -59,7 +138,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
 }
 
 /*
- * Use your own validation token. Check that the token used in the Webhook 
+ * Use your own validation token. Check that the token used in the Webhook
  * setup is the same token used here.
  *
  */
@@ -72,17 +151,20 @@ app.get('/webhook', function(req, res) {
     res.status(200).send(req.query['hub.challenge']);
   } else {
     console.error("Failed validation. Make sure the validation tokens match.");
-    res.sendStatus(403);          
-  }  
-}); 
+    res.sendStatus(403);
+  }
+});
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
  * webhook. Be sure to subscribe your app to your page to receive callbacks
- * for your page. 
+ * for your page.
  * https://developers.facebook.com/docs/messenger-platform/implementation#subscribe_app_pages
  *
  */
+
+//TODO: function that returns message when bot starts
+
 app.post('/webhook', function (req, res) {
 
   var data = req.body;
@@ -113,15 +195,15 @@ app.post('/webhook', function (req, res) {
 
     // Assume all went well.
     //
-    // You must send back a 200, within 20 seconds, to let us know you've 
+    // You must send back a 200, within 20 seconds, to let us know you've
     // successfully received the callback. Otherwise, the request will time out.
     res.sendStatus(200);
   }
 });
 
 /*
- * Verify that the callback came from Facebook. Using the App Secret from 
- * the App Dashboard, we can verify the signature that is sent with each 
+ * Verify that the callback came from Facebook. Using the App Secret from
+ * the App Dashboard, we can verify the signature that is sent with each
  * callback in the x-hub-signature field, located in the header.
  *
  * https://developers.facebook.com/docs/graph-api/webhooks#setup
@@ -131,7 +213,7 @@ function verifyRequestSignature(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
 
   if (!signature) {
-    // For testing, let's log an error. In production, you should throw an 
+    // For testing, let's log an error. In production, you should throw an
     // error.
     console.error("Couldn't validate the signature.");
   } else {
@@ -152,8 +234,8 @@ function verifyRequestSignature(req, res, buf) {
 /*
  * Authorization Event
  *
- * The value for 'optin.ref' is defined in the entry point. For the "Send to 
- * Messenger" plugin, it is the 'data-ref' field. Read more at 
+ * The value for 'optin.ref' is defined in the entry point. For the "Send to
+ * Messenger" plugin, it is the 'data-ref' field. Read more at
  * https://developers.facebook.com/docs/messenger-platform/webhook-reference#auth
  *
  */
@@ -163,14 +245,14 @@ function receivedAuthentication(event) {
   var timeOfAuth = event.timestamp;
 
   // The 'ref' field is set in the 'Send to Messenger' plugin, in the 'data-ref'
-  // The developer can set this to an arbitrary value to associate the 
+  // The developer can set this to an arbitrary value to associate the
   // authentication callback with the 'Send to Messenger' click event. This is
-  // a way to do account linking when the user clicks the 'Send to Messenger' 
+  // a way to do account linking when the user clicks the 'Send to Messenger'
   // plugin.
   var passThroughParam = event.optin.ref;
 
   console.log("Received authentication for user %d and page %d with pass " +
-    "through param '%s' at %d", senderID, recipientID, passThroughParam, 
+    "through param '%s' at %d", senderID, recipientID, passThroughParam,
     timeOfAuth);
 
   // When an authentication is received, we'll send a message back to the sender
@@ -182,16 +264,16 @@ function receivedAuthentication(event) {
 /*
  * Message Event
  *
- * This event is called when a message is sent to your page. The 'message' 
+ * This event is called when a message is sent to your page. The 'message'
  * object format can vary depending on the kind of message that was received.
  * Read more at https://developers.facebook.com/docs/messenger-platform/webhook-reference#received_message
  *
- * For this example, we're going to echo any text that we get. If we get some 
+ * For this example, we're going to echo any text that we get. If we get some
  * special keywords ('button', 'generic', 'receipt'), then we'll send back
- * examples of those bubbles to illustrate the special message bubbles we've 
- * created. If we receive a message with an attachment (image, video, audio), 
+ * examples of those bubbles to illustrate the special message bubbles we've
+ * created. If we receive a message with an attachment (image, video, audio),
  * then we'll simply confirm that we've received the attachment.
- * 
+ *
  */
 function receivedMessage(event) {
   var senderID = event.sender.id;
@@ -199,7 +281,7 @@ function receivedMessage(event) {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  console.log("Received message for user %d and page %d at %d with message:", 
+  console.log("Received message for user %d and page %d at %d with message:",
     senderID, recipientID, timeOfMessage);
   console.log(JSON.stringify(message));
 
@@ -215,36 +297,38 @@ function receivedMessage(event) {
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
-    switch (messageText) {
-      case 'image':
-        sendImageMessage(senderID);
+    switch (stateOftheApp.state[0]) {
+      case 1:
+        if (stateOftheApp.state[1] == 0) {
+          if (isNegative(messageText)) {
+            sendMessage(yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
+            stateOftheApp.userAnswer = messageText;
+          } else {
+            user.facts.push(messageText);
+            fitInCategory(messageText);
+          }
+        } else {
+          user.facts.push(messageText);
+        }
         break;
-
-      case 'button':
-        sendButtonMessage(senderID);
-        break;
-
-      case 'generic':
+      case 2:
         sendGenericMessage(senderID);
         break;
 
-      case 'receipt':
+      case 3:
         sendReceiptMessage(senderID);
         break;
 
       default:
         sendTextMessage(senderID, messageText);
     }
-  } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
-  }
 }
 
 
 /*
  * Delivery Confirmation Event
  *
- * This event is sent to confirm the delivery of a message. Read more about 
+ * This event is sent to confirm the delivery of a message. Read more about
  * these fields at https://developers.facebook.com/docs/messenger-platform/webhook-reference#message_delivery
  *
  */
@@ -258,7 +342,7 @@ function receivedDeliveryConfirmation(event) {
 
   if (messageIDs) {
     messageIDs.forEach(function(messageID) {
-      console.log("Received delivery confirmation for message ID: %s", 
+      console.log("Received delivery confirmation for message ID: %s",
         messageID);
     });
   }
@@ -272,21 +356,34 @@ function receivedDeliveryConfirmation(event) {
  *
  * This event is called when a postback is tapped on a Structured Message. Read
  * more at https://developers.facebook.com/docs/messenger-platform/webhook-reference#postback
- * 
+ *
  */
 function receivedPostback(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfPostback = event.timestamp;
 
-  // The 'payload' param is a developer-defined field which is set in a postback 
-  // button for Structured Messages. 
+  // The 'payload' param is a developer-defined field which is set in a postback
+  // button for Structured Messages.
   var payload = event.postback.payload;
 
-  console.log("Received postback for user %d and page %d with payload '%s' " + 
+  switch (stateOftheApp.state[0]) {
+    case 0:
+      user.gender = payload;
+      break;
+    case 1:
+      if(payload == "Yes") {
+        sendMessage("Ok, then I will use this fact to write your About me.");
+        user.facts.push(stateOftheApp.userAnswer);
+      } else {
+        stateOftheApp.state = {1,1};
+      }
+  }
+
+  console.log("Received postback for user %d and page %d with payload '%s' " +
     "at %d", senderID, recipientID, payload, timeOfPostback);
 
-  // When a postback is called, we'll send a message back to the sender to 
+  // When a postback is called, we'll send a message back to the sender to
   // let them know it was successful
   sendTextMessage(senderID, "Postback called");
 }
@@ -318,7 +415,7 @@ function sendImageMessage(recipientId) {
  * Send a text message using the Send API.
  *
  */
-function sendTextMessage(recipientId, messageText) {
+function sendMessage(recipientId, messageText) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -358,7 +455,7 @@ function sendButtonMessage(recipientId) {
         }
       }
     }
-  };  
+  };
 
   callSendAPI(messageData);
 }
@@ -380,7 +477,7 @@ function sendGenericMessage(recipientId) {
           elements: [{
             title: "rift",
             subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",               
+            item_url: "https://www.oculus.com/en-us/rift/",
             image_url: "http://messengerdemo.parseapp.com/img/rift.png",
             buttons: [{
               type: "web_url",
@@ -394,7 +491,7 @@ function sendGenericMessage(recipientId) {
           }, {
             title: "touch",
             subtitle: "Your Hands, Now in VR",
-            item_url: "https://www.oculus.com/en-us/touch/",               
+            item_url: "https://www.oculus.com/en-us/touch/",
             image_url: "http://messengerdemo.parseapp.com/img/touch.png",
             buttons: [{
               type: "web_url",
@@ -409,7 +506,7 @@ function sendGenericMessage(recipientId) {
         }
       }
     }
-  };  
+  };
 
   callSendAPI(messageData);
 }
@@ -434,8 +531,8 @@ function sendReceiptMessage(recipientId) {
           recipient_name: "Peter Chang",
           order_number: receiptId,
           currency: "USD",
-          payment_method: "Visa 1234",        
-          timestamp: "1428444852", 
+          payment_method: "Visa 1234",
+          timestamp: "1428444852",
           elements: [{
             title: "Oculus Rift",
             subtitle: "Includes: headset, sensor, remote",
@@ -481,8 +578,8 @@ function sendReceiptMessage(recipientId) {
 }
 
 /*
- * Call the Send API. The message data goes in the body. If successful, we'll 
- * get the message id in a response 
+ * Call the Send API. The message data goes in the body. If successful, we'll
+ * get the message id in a response
  *
  */
 function callSendAPI(messageData) {
@@ -497,22 +594,55 @@ function callSendAPI(messageData) {
       var recipientId = body.recipient_id;
       var messageId = body.message_id;
 
-      console.log("Successfully sent generic message with id %s to recipient %s", 
+      console.log("Successfully sent generic message with id %s to recipient %s",
         messageId, recipientId);
     } else {
       console.error("Unable to send message.");
       console.error(response);
       console.error(error);
     }
-  });  
+  });
 }
 
+
+//function that sends a yesorno buttons template to the user
+function yesOrNoButtons(title) {
+  var  message = {
+       "attachment":{
+           "type":"template",
+           "payload":{
+               "template_type":"button",
+               "text":title,
+               "buttons":[
+               {
+                 "type":"postback",
+                 "title":"Yes",
+                 "payload":"Yes"
+               },
+               {
+                 "type":"postback",
+                 "title":"No",
+                 "payload":"No"
+               }
+               ]
+           }
+         }
+   };
+   sendMessage(message);
+}
+
+
+//TODO: end function, it collects data from the user
+function end () {
+
+}
+
+
 // Start server
-// Webhooks must be available via SSL with a certificate signed by a valid 
+// Webhooks must be available via SSL with a certificate signed by a valid
 // certificate authority.
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
 module.exports = app;
-

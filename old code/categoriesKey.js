@@ -59,7 +59,8 @@ function checkIfPool(message) {
   for (int i =0; i<wordsArray.length; i++) {
     if(checkPersonalityType(wordsArray[i]) !=0) poolsMentioned.push(checkPersonalityType(wordsArray[i]);
   }
-  return poolsMentioned;
+  var 
+  return pool;
 }
 
 //split a string into words

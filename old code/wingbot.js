@@ -23,7 +23,7 @@ var openEndedQuestions = {"Tell me one interesting thing about yourself.",
 
 
 
-//TODO: function that asks userName from the user
+//function that asks userName from the user
 function getUserName () {
   sendMessage("Oh hey there, what’s your name?");
   var userName = getAnswer();
@@ -85,12 +85,6 @@ function fitInCategory(message) {
   for (int i = 0;i<poolOutcomes.length(); i++) {
     if
   }
-}
-
-
-//TODO: sendMessage function
-function sendMessage() {
-
 }
 
 
