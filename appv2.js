@@ -1,14 +1,8 @@
-/*
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 /* jshint node: true, devel: true */
 'use strict';
+/*
+Connections to the API Facebook Starts here:
+ */
 
 const
   bodyParser = require('body-parser'),
@@ -23,6 +17,14 @@ var app = express();
 app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
+
+/* Nolan Begin */
+//var HavenOnDemand = require('./HavenOnDemand.js')
+var catKey = require('./oldCode/categoriesKey.js');
+//var wingbot = require('./wingbot.js');
+var haven = require('./oldCode/HavenOnDemand.js');
+
+/* Nolan End */
 
 /*
  * Be sure to setup your config values before running this code. You can
@@ -55,6 +57,8 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
  * setup is the same token used here.
  *
  */
+
+
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === VALIDATION_TOKEN) {
@@ -66,7 +70,6 @@ app.get('/webhook', function(req, res) {
   }
 });
 
-
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
  * webhook. Be sure to subscribe your app to your page to receive callbacks
@@ -74,6 +77,105 @@ app.get('/webhook', function(req, res) {
  * https://developers.facebook.com/docs/messenger-platform/implementation#subscribe_app_pages
  *
  */
+
+ /*LOGIC of the bot*/
+
+ //user object to store information given
+ var user  = {
+   name: "",
+   gender:"",
+   facts:[" "],
+   answeredQuestions: [""]
+ };
+
+ var stateOftheApp = {
+   state:[0,0],
+   catPool:0,
+   userAnswer: "",
+   secondQuestion:0
+ };
+
+ var openEndedQuestions = ["Tell me one interesting thing about yourself.",
+                   "What can you do better than anyone else?",
+                   "What do you do for fun?",
+                   "empty string for test"];
+
+ var manReactions = ["That’s cool bro.", "Awesome dude!", "Totally hardcore."];
+ var girlReactions = ["That’s cute. I like that!", "Awww. That’s adorable.", "You go girl!"];
+ var dinosaurReactions = ["Rawr!","That’s killer.", "You’ve got good mating instincts."];
+
+ function getReaction() {
+   switch (user.gender) {
+     case "male" : return manReactions[Math.floor(Math.random() * 3)];
+     case "female": return girlReactions[Math.floor(Math.random() * 3)];
+     case "neutral": return dinosaurReactions[Math.floor(Math.random() * 3)];
+   }
+ }
+
+ function storeAnsweredQuestions (index, answer) {
+   var chosenPool = catKey.getObject(stateOftheApp.catPool);
+   addVariableToString(answer, chosenPool.answeredQuestions[index]);
+ }
+
+ //substitute # for answer variable
+ function addVariableToString(answer, string) {
+   return string.replace("#", answer);
+ }
+
+ //chooseGender function where 3 buttons are shown and the user chooses their prefered gender
+ function chooseGender() {
+  var  message = {
+       "attachment":{
+           "type":"template",
+           "payload":{
+               "template_type":"button",
+               "text":"Awesome! What gender speaks to you the most?",
+               "buttons":[
+               {
+                 "type":"postback",
+                 "title":"Male",
+                 "payload":"male"
+               },
+               {
+                 "type":"postback",
+                 "title":"Female",
+                 "payload":"female"
+               },
+               {
+                 "type":"postback",
+                 "title":"Dinousar",
+                 "payload":"neutral"
+               }
+               ]
+           }
+         }
+   };
+   stateOftheApp.state = [0,0];
+   sendMessage(message);
+   //try to see if it works putting this function here that calls the first open ended question:
+   askOpenEndedQuestion();
+ }
+
+ //function called to get bot to give you one of the open ended questions:
+ function askOpenEndedQuestion() {
+   if (stateOftheApp.state[0] === 0) stateOftheApp.state = [1,0];
+   var random = Math.floor(Math.random() * openEndedQuestions.length());
+   sendMessage(openEndedQuestions[random]);
+   openEndedQuestions.splice(random, 1);
+ }
+
+ function askKeyquestions() {
+   if (stateOftheApp.state[0] === 1) stateOftheApp.state = [2,0];
+   var chosenPool = catKey.getObject(stateOftheApp.catPool);
+   var random = Math.floor(Math.random() * chosenPool.questions.length());
+   stateOftheApp.secondQuestion = random;
+   sendMessage(chosenPool.questions[random]);
+   chosenPool.questions.splice(random, 1);
+ }
+
+//TODO: function that returns message when bot starts
+//sendMessage("Oh hey there, what’s your name?");
+
 app.post('/webhook', function (req, res) {
 
   var data = req.body;
@@ -166,7 +268,7 @@ function receivedAuthentication(event) {
 
   // When an authentication is received, we'll send a message back to the sender
   // to let them know it was successful.
-  sendTextMessage(senderID, "Authentication successful");
+  sendMessage(senderID, "Authentication successful");
 }
 
 
@@ -206,28 +308,58 @@ function receivedMessage(event) {
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
-    switch (messageText) {
-      case 'image':
-        sendImageMessage(senderID);
+    switch (stateOftheApp.state[0]) {
+      case 0:
+        user.name = messageText;
+        sendMessage("Hey "+user.name+"! I’m Wingbot. I can help you write your online dating Profile");
+        chooseGender();
+        break;
+      case 1:
+        if (stateOftheApp.state[1] === 0) {
+          if (haven.isNegative(messageText)) {
+            sendMessage(yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
+            stateOftheApp.userAnswer = messageText;
+          } else {
+            getReaction();
+            user.facts.push(messageText);
+            stateOftheApp.catPool = catKey.checkIfPool(messageText);
+            askKeyquestions();
+          }
+        } else {
+          getReaction();
+          user.facts.push(messageText);
+          stateOftheApp.catPool = catKey.checkIfPool(messageText);
+        }
+        break;
+      case 2:
+        var chosenPool = catKey.getObject(stateOftheApp.catPool);
+        if (stateOftheApp.state[1] === 0) {
+          if (haven.isNegative(messageText)) {
+            //if first key question is not liked you get a random catPool num and ask question again
+            stateOftheApp.catPool = Math.floor(Math.random() * 5)+1;
+            askKeyquestions();
+          } else {
+            //if they like the first question we send the subquestion:
+            stateOftheApp.state[1] = 1;
+            sendMessage(chosenPool.subquestion[stateOftheApp.secondQuestion]);
+          }
+        } else {
+          //if this is a repeat it means user is answering subquestion; we store the answeredQuestions and count++ to that pool
+          getReaction();
+          storeAnsweredQuestions(chosenPool.index, messageText);
+          catKey.addPointsToPersonality(chosenPool.index);
+          stateOftheApp.state[1] = 0;
+          askKeyquestions();
+        }
         break;
 
-      case 'button':
-        sendButtonMessage(senderID);
-        break;
-
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      case 'receipt':
+      case 3:
         sendReceiptMessage(senderID);
         break;
 
       default:
-        sendTextMessage(senderID, messageText);
+        sendMessage(senderID, "Excuse I did not quite get that, can you repeat?");
     }
-  } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
   }
 }
 
@@ -274,12 +406,25 @@ function receivedPostback(event) {
   // button for Structured Messages.
   var payload = event.postback.payload;
 
+  switch (stateOftheApp.state[0]) {
+    case 0:
+      user.gender = payload;
+      break;
+    case 1:
+      if(payload == "Yes") {
+        sendMessage("Ok, then I will use this fact to write your About me.");
+        user.facts.push(stateOftheApp.userAnswer);
+      } else {
+        stateOftheApp.state = [1,1];
+      }
+  }
+
   console.log("Received postback for user %d and page %d with payload '%s' " +
     "at %d", senderID, recipientID, payload, timeOfPostback);
 
   // When a postback is called, we'll send a message back to the sender to
   // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
+  sendMessage(senderID, "Postback called");
 }
 
 
@@ -309,7 +454,7 @@ function sendImageMessage(recipientId) {
  * Send a text message using the Send API.
  *
  */
-function sendTextMessage(recipientId, messageText) {
+function sendMessage(recipientId, messageText) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -497,6 +642,40 @@ function callSendAPI(messageData) {
     }
   });
 }
+
+
+//function that sends a yesorno buttons template to the user
+function yesOrNoButtons(title) {
+  var  message = {
+       "attachment":{
+           "type":"template",
+           "payload":{
+               "template_type":"button",
+               "text":title,
+               "buttons":[
+               {
+                 "type":"postback",
+                 "title":"Yes",
+                 "payload":"Yes"
+               },
+               {
+                 "type":"postback",
+                 "title":"No",
+                 "payload":"No"
+               }
+               ]
+           }
+         }
+   };
+   sendMessage(message);
+}
+
+
+//TODO: end function, it collects data from the user
+function end () {
+
+}
+
 
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid
