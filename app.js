@@ -10,6 +10,14 @@
 /* jshint node: true, devel: true */
 'use strict';
 
+/* Nolan Begin */
+
+/*var catKey = require('./categoriesKey.js');*/
+var wingbot = require('./wingbot.js');
+var haven = require('./haven.js');
+
+/* Nolan End */
+
 const 
   bodyParser = require('body-parser'),
   config = require('config'),
@@ -67,16 +75,6 @@ app.get('/webhook', function(req, res) {
     res.sendStatus(403);          
   }  
 }); 
-
-/*webhook: function(req, res) {
-
-   if (req.query['hub.verify_token'] === 'tokentoken') {
-      res.send(req.query['hub.challenge']);
-   } else {
-      res.send('Error, wrong validation token');    
-   }
-}*/
-
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
