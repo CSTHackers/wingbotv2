@@ -167,9 +167,9 @@ function receivedAuthentication(event) {
 //user object to store information given
 var user  = {
   name: " ",
-  gender:"neutral",
-  facts: new Array[],
-  answeredQuestions:  new Array[]
+  gender:"",
+  facts: [" "],
+  answeredQuestions:  [" "]
 };
 
 var stateOftheApp = {
@@ -303,6 +303,7 @@ function receivedMessage(event) {
       console.log("inside case 2");
       console.log("app state: "+stateOftheApp.state);
       console.log("message: "+messageText);
+      counterHell = 0;
         if (stateOftheApp.state[1] === 0) {
           if (isNegative(messageText)) {
             sendMessage(senderID,"This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?");
