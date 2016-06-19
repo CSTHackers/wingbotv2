@@ -1,8 +1,5 @@
 /* jshint node: true, devel: true */
 'use strict';
-/*
-Connections to the API Facebook Starts here:
- */
 
 const
   bodyParser = require('body-parser'),
@@ -49,8 +46,6 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
  * setup is the same token used here.
  *
  */
-
-
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === VALIDATION_TOKEN) {
@@ -62,6 +57,7 @@ app.get('/webhook', function(req, res) {
   }
 });
 
+
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
  * webhook. Be sure to subscribe your app to your page to receive callbacks
@@ -69,11 +65,6 @@ app.get('/webhook', function(req, res) {
  * https://developers.facebook.com/docs/messenger-platform/implementation#subscribe_app_pages
  *
  */
-
-
-//TODO: function that returns message when bot starts
-//sendMessage("Oh hey there, what’s your name?");
-
 app.post('/webhook', function (req, res) {
 
   var data = req.body;
@@ -166,7 +157,7 @@ function receivedAuthentication(event) {
 
   // When an authentication is received, we'll send a message back to the sender
   // to let them know it was successful.
-  sendMessage(senderID, "Authentication successful");
+  sendTextMessage(senderID, "Authentication successful");
 }
 
 /* Nolan Begin */
