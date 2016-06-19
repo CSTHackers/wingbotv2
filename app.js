@@ -168,8 +168,8 @@ function receivedAuthentication(event) {
 var user  = {
   name: " ",
   gender:"neutral",
-  facts:[" "],
-  answeredQuestions: [""]
+  facts: new Array[],
+  answeredQuestions:  new Array[]
 };
 
 var stateOftheApp = {
@@ -305,10 +305,11 @@ function receivedMessage(event) {
       console.log("message: "+messageText);
         if (stateOftheApp.state[1] === 0) {
           if (isNegative(messageText)) {
-            sendMessage(senderID,yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
+            sendMessage(senderID,"This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?");
             stateOftheApp.userAnswer = messageText;
           } else {
-            sendMessage(senderID,getReaction());
+            if(stateOftheApp.state[0] === 2) sendMessage(senderID,getReaction());
+            console.log(messageText);
             user.facts.push(messageText);
             console.log("check if pool "+checkIfPool(messageText));
             stateOftheApp.catPool = checkIfPool(messageText);
@@ -334,7 +335,7 @@ function receivedMessage(event) {
           }
         } else {
           //if this is a repeat it means user is answering subquestion; we store the answeredQuestions and count++ to that pool
-          getReaction();
+          sendMessage(senderID,getReaction());
           storeAnsweredQuestions(chosenPool.index, messageText);
           addPointsToPersonality(chosenPool.index);
           stateOftheApp.state[1] = 0;
