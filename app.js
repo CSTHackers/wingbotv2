@@ -181,8 +181,7 @@ var stateOftheApp = {
 
 var openEndedQuestions = ["Tell me one interesting thing about yourself.",
                   "What can you do better than anyone else?",
-                  "What do you do for fun?",
-                  "empty string for test"];
+                  "What do you do for fun?"];
 
 var manReactions = ["That’s cool bro.", "Awesome dude!", "Totally hardcore."];
 var girlReactions = ["That’s cute. I like that!", "Awww. That’s adorable.", "You go girl!"];
@@ -273,7 +272,7 @@ function receivedMessage(event) {
   if (messageText) {
     //sendMessage(senderID,messageText);
     //sendMessage(senderID, messageText);
-    console.log("after two echos");
+    //console.log("after two echos");
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
@@ -283,13 +282,18 @@ function receivedMessage(event) {
         sendMessage(senderID,"Hey! I’m Wingbot. I can help you write your online dating Profile");
         if (user.name === " ") {
             stateOftheApp.state[0] = 1;
+            sendMessage(senderID,"What should I call you?");
         }
-        sendMessage(senderID,"What should I call you?");
         break;
       case 1:
         user.name = messageText;
-        sendMessage(senderID, "Nice to meet you "+messageText);
-        chooseGender(event);
+        if (user.name === " ") {
+            user.name = messageText;
+            stateOftheApp.state[0] = 1;
+        } else {
+          sendMessage(senderID, "Nice to meet you "+messageText);
+          chooseGender(event);
+        }
       case 2:
         if (stateOftheApp.state[1] === 0) {
           if (isNegative(messageText)) {
