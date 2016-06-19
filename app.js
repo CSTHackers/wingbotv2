@@ -282,9 +282,11 @@ function receivedMessage(event) {
       case 0:
         console.log("case 0");
         sendMessage(senderID,"Hey! I’m Wingbot. I can help you write your online dating Profile");
-        if (messageText === "hello") {
-            stateOftheApp.state[0] = 1;
-            sendMessage(senderID,"What should I call you?");
+        if (messageText === "hello") stateOftheApp.state[1] = 1;
+        else return;
+        if (stateOftheApp.state[1] === 1) {
+          sendMessage(senderID,"What should I call you?");
+          stateOftheApp.state[0] = 1;
         }
         break;
       case 1:
@@ -391,6 +393,7 @@ function receivedPostback(event) {
   switch (stateOftheApp.state[0]) {
     case 1:
       user.gender = payload;
+      sendMessage(senderID, "Ok, "+payload+" pronouns it is!!");
       askOpenEndedQuestion(event);
       break;
     // case 0:
@@ -407,7 +410,7 @@ function receivedPostback(event) {
 
   // When a postback is called, we'll send a message back to the sender to
   // let them know it was successful
-  sendMessage(senderID, "Ok, "+payload+" pronouns it is!!");
+
 }
 
 
