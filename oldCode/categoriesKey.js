@@ -29,19 +29,25 @@ var NPRnerd = {
 var Foodie ={
   count: 0,
   index:3,
-  keywords: [""],
-  questions:["Do you have a favorite food?", "What’s the weirdest thing you’ve ever eaten?" ],
-  subQuestions:["What is it?"],
-  answeredQuestions:["I love (insert favorite food). Take notes, if you want the way to my heart: it’s through my stomach."],
+  keywords: ["food", "foods", "chef", "chefs", "chocolate", "restaurant", "dine out", "dining", "food truck", "vegan", "vegetarian", "eat", "ate", "cooking", "cook", "bake", "bakery", "baked goods"],
+  questions:["Do you have a favorite food?", "What’s the weirdest thing you’ve ever eaten?", "What are some of your favorite restaurants?", "Do you follow any celebrity chefs?", "Do you cook or bake at home?"],
+  subQuestions:["What is it?", "I’ve never heard of that. Can you send me a Wikipedia link?", "If you could only pick one, which will it be?", "Which one is your favorite?", "What is the house specialty?" ],
+  answeredQuestions:["I love (insert favorite food). Take notes, if you want the way to my heart: it’s through my stomach.",
+                    "Fun fact: I also once ate a #. I know, I know. It’s strange. But the tongue wants what it wants. Google the images if you are brave!",
+                    " I’m always open to trying new places, but I can get enough of #. If you’ve been there, you know what I’m talking about. If not: prepare yourself for a whole new world of delicious.",
+                    " I find people cooking food kind of awesome. Just set me up with a TV, turn on some # and you’ll have me salivating in seconds.",
+                    "Yes, I do have a kitchen and I’m not afraid to use it. If you’re lucky enough, I’ll make you a # but be warned: I don’t just make it for anyone."],
   statement: ""
 };
 var STEMnerd= {
   count: 0,
   index:4,
-  keywords: [""],
-  questions:[],
-  subQuestions:[],
-  answeredQuestions:[],
+  keywords: ["science", "nerd", "code", "tech", "technology", "bot", "API", "experiments", "logic", "apps", "engineering", "school", "puzzles", "math", "scientists", "doctor"],
+  questions:["Are you a scientist, doctor, or engineer?", "Do you follow any celebrity scientists?", "Have you ever survived a hackathon?", "Do you have a favorite gadget?"],
+  subQuestions:["What’s is your area of specialty?", "Which ones are your favorites?" ,"What did you make?", "What is it?"],
+  answeredQuestions:"In my professional life I am a #. My parents are definitely proud of me. My wallet however is another story.",
+                    "I’m a huge fan of science. # is my god. Yes, I am a nerd. Live it. Love it. Embrace it.",
+                    " Fun fact: I’ve been to a hackathon and survived it on free food, caffeine, and no shortage of goodwill. Managed to build a # to boot as well. If you’re at all curious, you can message and I would love to show it to you!", "SI have to admit, I’m also in love with my #. If this causes any problems in our potential relationship, I apologize in advance."],
   statement: ""
 };
 var BigNerd= {

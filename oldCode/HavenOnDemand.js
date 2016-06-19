@@ -1,13 +1,13 @@
-var havenondemand = require('havenondemand')
-var client = new havenondemand.HODClient('5e3a9098-3935-43c2-ab2f-42d58fab0589')
+var havenondemand = require('havenondemand');
+var client = new havenondemand.HODClient('5e3a9098-3935-43c2-ab2f-42d58fab0589');
 
 
 function isNegative(message){
-  var dataSentiment = {text:message}
+  var dataSentiment = {text:message};
   client.call('analyzesentiment',dataSentiment, function(err,resp,body){
     if(!err){
-      var score = resp.body.aggregate.score
-      console.log("pre check")
+      var score = resp.body.aggregate.score;
+      console.log("pre check");
       if(score > 0){
         //console.log('false')
         return false;
@@ -20,15 +20,15 @@ function isNegative(message){
     else{
       //console.log("break")
     }
-  })
+  });
 }
 
 
 function checkRelatedConcepts(message){
-  var dataRelatedConcepts = {text: message}
+  var dataRelatedConcepts = {text: message};
   client.call('findrelatedconcepts', dataRelatedConcepts, function(err, resp, body){
     if(!err){
-      var relatedConcepts = resp.body.entities
+      var relatedConcepts = resp.body.entities;
       var conceptsArray = new Array(5);
       conceptsArray[0] = relatedConcepts[0];
       conceptsArray[1] = relatedConcepts[1];
@@ -42,12 +42,12 @@ function checkRelatedConcepts(message){
       //   var text = relatedConcept.text
       //   console.log(text)
       // }
-  })
+  });
 }
 
 //Function takes in user response as a string
 function callToAPI_check(textSentiments){
-  var dataSentiment = {text: textSentiments}
+  var dataSentiment = {text: textSentiments};
   //Calls for use of sentiment analysis on data from callToAPI_check()
   // Tyler mentioned that you can reuse the function(err,resp,body), but I'll bother him
   // with a bigger problem down the line ¯\_(ツ)_/¯
@@ -55,22 +55,22 @@ function callToAPI_check(textSentiments){
       if (!err1) {
         // Will go down a nested chain from a .json file which is generated from the api
         // It pulls the decimal value associated with how high/low a particular phrase is rated
-        var score = resp1.body.aggregate.score
+        var score = resp1.body.aggregate.score;
         if (score > 0) {
 
           var dataRelatedConcepts = dataSentiment;
           client.call('findrelatedconcepts', dataRelatedConcepts, function(err2, resp2, body2) {
             if (!err2) {
               //console.log('am i here 3?')
-              var relatedConcepts =  resp2.body.entities
+              var relatedConcepts =  resp2.body.entities;
               for (var i=0; i<relatedConcepts.length; i++) {
-                var relatedConcept = relatedConcepts[i]
-                var text = relatedConcept.text
-                console.log(text)
+                var relatedConcept = relatedConcepts[i];
+                var text = relatedConcept.text;
+                console.log(text);
               }
             }
-          })
+          });
         }
       }
-    })
+    });
 }
