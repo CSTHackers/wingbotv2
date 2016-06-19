@@ -694,7 +694,7 @@ function end () {
   console.log('Node app is running on port', app.get('port'));
 });*/
 
-https.createServer(credentials, app).listen(port);
+https.createServer(credentials, app).listen(process.env.PORT);
 
 /* Nolan End */
 
