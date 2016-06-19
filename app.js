@@ -1,5 +1,3 @@
-/* jshint node: true, devel: true */
-'use strict';
 
 /* Nolan Begin */
 //var HavenOnDemand = require('./HavenOnDemand.js')
@@ -8,101 +6,6 @@ var catKey = require('./oldCode/categoriesKey.js');
 var haven = require('./oldCode/HavenOnDemand.js');
 
 /* Nolan End */
-
-/*LOGIC of the bot*/
-
-//user object to store information given
-var user  = {
-  name: "",
-  gender:"",
-  facts:[" "],
-  answeredQuestions: [""]
-};
-
-var stateOftheApp = {
-  state:[0,0],
-  catPool:0,
-  userAnswer: "",
-  secondQuestion:0
-};
-
-var openEndedQuestions = ["Tell me one interesting thing about yourself.",
-                  "What can you do better than anyone else?",
-                  "What do you do for fun?",
-                  "empty string for test"];
-
-var manReactions = ["That’s cool bro.", "Awesome dude!", "Totally hardcore."];
-var girlReactions = ["That’s cute. I like that!", "Awww. That’s adorable.", "You go girl!"];
-var dinosaurReactions = ["Rawr!","That’s killer.", "You’ve got good mating instincts."];
-
-function getReaction() {
-  switch (user.gender) {
-    case "male" : return manReactions[Math.floor(Math.random() * 3)];
-    case "female": return girlReactions[Math.floor(Math.random() * 3)];
-    case "neutral": return dinosaurReactions[Math.floor(Math.random() * 3)];
-  }
-}
-
-function storeAnsweredQuestions (index, answer) {
-  var chosenPool = catKey.getObject(stateOftheApp.catPool);
-  addVariableToString(answer, chosenPool.answeredQuestions[index]);
-}
-
-//substitute # for answer variable
-function addVariableToString(answer, string) {
-  return string.replace("#", answer);
-}
-
-//chooseGender function where 3 buttons are shown and the user chooses their prefered gender
-function chooseGender() {
- var  message = {
-      "attachment":{
-          "type":"template",
-          "payload":{
-              "template_type":"button",
-              "text":"Awesome! What gender speaks to you the most?",
-              "buttons":[
-              {
-                "type":"postback",
-                "title":"Male",
-                "payload":"male"
-              },
-              {
-                "type":"postback",
-                "title":"Female",
-                "payload":"female"
-              },
-              {
-                "type":"postback",
-                "title":"Dinousar",
-                "payload":"neutral"
-              }
-              ]
-          }
-        }
-  };
-  stateOftheApp.state = [0,0];
-  sendMessage(message);
-  //try to see if it works putting this function here that calls the first open ended question:
-  askOpenEndedQuestion();
-}
-
-//function called to get bot to give you one of the open ended questions:
-function askOpenEndedQuestion() {
-  if (stateOftheApp.state[0] === 0) stateOftheApp.state = [1,0];
-  var random = Math.floor(Math.random() * openEndedQuestions.length());
-  sendMessage(openEndedQuestions[random]);
-  openEndedQuestions.splice(random, 1);
-}
-
-function askKeyquestions() {
-  if (stateOftheApp.state[0] === 1) stateOftheApp.state = [2,0];
-  var chosenPool = catKey.getObject(stateOftheApp.catPool);
-  var random = Math.floor(Math.random() * chosenPool.questions.length());
-  stateOftheApp.secondQuestion = random;
-  sendMessage(chosenPool.questions[random]);
-  chosenPool.questions.splice(random, 1);
-}
 
 /*
 Connections to the API Facebook Starts here:
@@ -174,6 +77,101 @@ app.get('/webhook', function(req, res) {
  * https://developers.facebook.com/docs/messenger-platform/implementation#subscribe_app_pages
  *
  */
+
+ /*LOGIC of the bot*/
+
+ //user object to store information given
+ var user  = {
+   name: "",
+   gender:"",
+   facts:[" "],
+   answeredQuestions: [""]
+ };
+
+ var stateOftheApp = {
+   state:[0,0],
+   catPool:0,
+   userAnswer: "",
+   secondQuestion:0
+ };
+
+ var openEndedQuestions = ["Tell me one interesting thing about yourself.",
+                   "What can you do better than anyone else?",
+                   "What do you do for fun?",
+                   "empty string for test"];
+
+ var manReactions = ["That’s cool bro.", "Awesome dude!", "Totally hardcore."];
+ var girlReactions = ["That’s cute. I like that!", "Awww. That’s adorable.", "You go girl!"];
+ var dinosaurReactions = ["Rawr!","That’s killer.", "You’ve got good mating instincts."];
+
+ function getReaction() {
+   switch (user.gender) {
+     case "male" : return manReactions[Math.floor(Math.random() * 3)];
+     case "female": return girlReactions[Math.floor(Math.random() * 3)];
+     case "neutral": return dinosaurReactions[Math.floor(Math.random() * 3)];
+   }
+ }
+
+ function storeAnsweredQuestions (index, answer) {
+   var chosenPool = catKey.getObject(stateOftheApp.catPool);
+   addVariableToString(answer, chosenPool.answeredQuestions[index]);
+ }
+
+ //substitute # for answer variable
+ function addVariableToString(answer, string) {
+   return string.replace("#", answer);
+ }
+
+ //chooseGender function where 3 buttons are shown and the user chooses their prefered gender
+ function chooseGender() {
+  var  message = {
+       "attachment":{
+           "type":"template",
+           "payload":{
+               "template_type":"button",
+               "text":"Awesome! What gender speaks to you the most?",
+               "buttons":[
+               {
+                 "type":"postback",
+                 "title":"Male",
+                 "payload":"male"
+               },
+               {
+                 "type":"postback",
+                 "title":"Female",
+                 "payload":"female"
+               },
+               {
+                 "type":"postback",
+                 "title":"Dinousar",
+                 "payload":"neutral"
+               }
+               ]
+           }
+         }
+   };
+   stateOftheApp.state = [0,0];
+   sendMessage(message);
+   //try to see if it works putting this function here that calls the first open ended question:
+   askOpenEndedQuestion();
+ }
+
+ //function called to get bot to give you one of the open ended questions:
+ function askOpenEndedQuestion() {
+   if (stateOftheApp.state[0] === 0) stateOftheApp.state = [1,0];
+   var random = Math.floor(Math.random() * openEndedQuestions.length());
+   sendMessage(openEndedQuestions[random]);
+   openEndedQuestions.splice(random, 1);
+ }
+
+ function askKeyquestions() {
+   if (stateOftheApp.state[0] === 1) stateOftheApp.state = [2,0];
+   var chosenPool = catKey.getObject(stateOftheApp.catPool);
+   var random = Math.floor(Math.random() * chosenPool.questions.length());
+   stateOftheApp.secondQuestion = random;
+   sendMessage(chosenPool.questions[random]);
+   chosenPool.questions.splice(random, 1);
+ }
 
 //TODO: function that returns message when bot starts
 //sendMessage("Oh hey there, what’s your name?");
