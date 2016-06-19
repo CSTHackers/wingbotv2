@@ -261,7 +261,7 @@ function receivedMessage(event) {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  console.log("Received message for user %d and page %d at %d with message:",
+  //console.log("Received message for user %d and page %d at %d with message:",
     senderID, recipientID, timeOfMessage);
   console.log(JSON.stringify(message));
 
@@ -301,18 +301,21 @@ function receivedMessage(event) {
         break;
       case 2:
       console.log("inside case 2");
+      console.log("app state: "+stateOftheApp.state);
+      console.log("message: "+messageText);
         if (stateOftheApp.state[1] === 0) {
           if (isNegative(messageText)) {
             sendMessage(senderID,yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
             stateOftheApp.userAnswer = messageText;
           } else {
-            sendMessage(senderID,Reaction());
+            sendMessage(senderID,getReaction());
             user.facts.push(messageText);
+            console.log("check if pool "+checkIfPool(messageText));
             stateOftheApp.catPool = checkIfPool(messageText);
             askKeyquestions(event);
           }
         } else {
-          sendMessage(senderID,Reaction());
+          sendMessage(senderID,getReaction());
           user.facts.push(messageText);
           stateOftheApp.catPool = checkIfPool(messageText);
         }
