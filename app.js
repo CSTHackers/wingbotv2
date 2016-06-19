@@ -227,6 +227,7 @@ function askOpenEndedQuestion(event) {
   var random = Math.floor(Math.random() * openEndedQuestions.length);
   sendMessage(senderID,openEndedQuestions[random]);
   openEndedQuestions.splice(random, 1);
+  console.log("state inside open Question" +stateOftheApp.state[0]);
 }
 
 function askKeyquestions(event) {
@@ -299,18 +300,19 @@ function receivedMessage(event) {
         }
         break;
       case 2:
+      console.log("inside case 2");
         if (stateOftheApp.state[1] === 0) {
           if (isNegative(messageText)) {
             sendMessage(senderID,yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
             stateOftheApp.userAnswer = messageText;
           } else {
-            getReaction();
+            sendMessage(senderID,Reaction());
             user.facts.push(messageText);
             stateOftheApp.catPool = checkIfPool(messageText);
             askKeyquestions(event);
           }
         } else {
-          getReaction();
+          sendMessage(senderID,Reaction());
           user.facts.push(messageText);
           stateOftheApp.catPool = checkIfPool(messageText);
         }
