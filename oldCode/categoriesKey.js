@@ -2,7 +2,7 @@
 var jockGirl = {
   count: 0,
   index:1,
-  keywords: ["sport", "sports", "club", "clubs","friends", "team","baseball", "football", "basketball", "beer", "pub", "bar" ],
+  keywords: ["sport", "sports", "club", "clubs","friends", "team","baseball", "football", "basketball", "beer", "pub", "bar", "playing", "play", "running", "exercise", "training"],
   questions: ["Do you like watching sports?", "Do you play any sports?", "Are you part of the club scene?", "Do you lift?", "Can you run more than a mile without stopping?"],
   subQuestions: ["Who do you root for?", "Which are your favorites?", "Which one do you go to most often?", "How much?", "How much more?"],
   answeredQuestions:["Yes, I am a huge # fan and I’m not ashamed of it. If you root for another team, I won’t judge you for it. Much.",
@@ -15,25 +15,43 @@ var jockGirl = {
 var NPRnerd = {
   count: 0,
   index:2,
-  keywords: [""],
-  questions:[],
-  subQuestions:[],
+  keywords: ["politics", "literature", "books", "book", "biographies", "black lives matter", "volunteer", "social justice", "show", "podcasts", "shows"],
+  questions:["Do you like reading?", "Do you listen to radio shows or podcasts?", "Who do you look up to?", "Are you passionate about a particular cause?",
+              "Do you enjoy having academic conversations with other people?"],
+  subQuestions:["What are some of the books made it onto your shelf?", "Which ones do you tune into regularly?", "Why?", "Which ones?", "What subjects do you enjoy talking about the most?"],
+  answeredQuestions:["I am an avid reader. If you look on my shelf you can find # among other favorites. There’s always room for more though: send me all your recommendations!",
+                  "Like most people, I’m a great listener: especially when it comes to #, and occasionally real people."
+                  "Some days I wish I could be more #. Life goals. I know. I’m an idealist: what can I say?",
+                  "I care a lot about #. Sure, the pay isn’t much but I get to feel like I’m saving the world. Go me!",
+                  "To me, the best kind of conversation is a smart conversation. I’m always up for chatting about # any day of the week. Yes, people: I am asking you to talk nerdy to me."],
   statement: ""
 };
 var Foodie ={
   count: 0,
   index:3,
-  keywords: [""]
+  keywords: [""],
+  questions:["Do you have a favorite food?", "What’s the weirdest thing you’ve ever eaten?" ],
+  subQuestions:["What is it?", ],
+  answeredQuestions:["I love (insert favorite food). Take notes, if you want the way to my heart: it’s through my stomach.", ],
+  statement: ""
 };
 var STEMnerd= {
   count: 0,
   index:4,
-  keywords: [""]
+  keywords: [""],
+  questions:[],
+  subQuestions:[],
+  answeredQuestions:[],
+  statement: ""
 };
 var BigNerd= {
   count: 0,
   index:5,
-  keywords: [""]
+  keywords: [""],
+  questions:[],
+  subQuestions:[],
+  answeredQuestions:[],
+  statement: ""
 };
 
 //check if input matches any personality type, return that index
@@ -67,17 +85,30 @@ function addKeytoPersonalityPool(keyword,poolId) {
 //function grabs keywords from messages and returns index of the keyPool
 function checkIfPool(message) {
   var wordsArray = splitStringforKeys(message);
-  var poolsMentioned;
+  var poolsMentioned = new Array();
+  var repeated = 0;
   for (var i =0; i<wordsArray.length; i++) {
     if(checkPersonalityType(wordsArray[i]) !==0) poolsMentioned.push(checkPersonalityType(wordsArray[i]));
   }
-  return pool;
+  for (var i =0; i<poolsMentioned.length; i++){
+    var tempNum = poolsMentioned[i];
+    for (var j =poolsMentioned.length; j >=0; j--) {
+      if (j !== i) {
+        if (poolsMentioned[j] === tempNum) repeated = tempNum;
+      }
+    }
+  }
+  return repeated;
 }
 
 //split a string into words
 function splitStringforKeys (message) {
-
-  return array;
+  var temp = new Array();
+  temp = str.split(" ");
+  for(var i = 0; i < temp.length(); i++){
+     if(temp[i] === "." || temp[i] === "," || temp[i] === "!") temp.splice(i,1);
+  }
+  return temp;
 }
 
 function getObject(index) {
