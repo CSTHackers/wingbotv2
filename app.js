@@ -312,7 +312,7 @@ function receivedMessage(event) {
             if(stateOftheApp.state[0] === 2) sendMessage(senderID,getReaction());
             console.log("passed Reactions");
             //user.facts.push(messageText);
-            console.log("check if pool "+checkIfPool(messageText));
+            //console.log("check if pool "+checkIfPool(messageText));
             stateOftheApp.catPool = 4;
             //askKeyquestions(event);
           }
