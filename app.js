@@ -283,7 +283,6 @@ function receivedMessage(event) {
       case 0:
         console.log("case 0");
         sendMessage(senderID,"Hey! I’m Wingbot. I can help you write your online dating Profile");
-        user.name = " ";
         if (user.name === " ") {
             stateOftheApp.state[0] = 1;
             sendMessage(senderID,"What should I call you?");
@@ -391,16 +390,17 @@ function receivedPostback(event) {
   var payload = event.postback.payload;
 
   switch (stateOftheApp.state[0]) {
-    case 0:
-      user.gender = payload;
-      break;
     case 1:
-      if(payload == "Yes") {
-        sendMessage("Ok, then I will use this fact to write your About me.");
-        user.facts.push(stateOftheApp.userAnswer);
-      } else {
-        stateOftheApp.state = [1,1];
-      }
+      user.gender = payload;
+      counterHell++;
+      break;
+    // case 0:
+    //   if(payload == "Yes") {
+    //     sendMessage("Ok, then I will use this fact to write your About me.");
+    //     user.facts.push(stateOftheApp.userAnswer);
+    //   } else {
+    //     stateOftheApp.state = [1,1];
+    //   }
   }
 
   console.log("Received postback for user %d and page %d with payload '%s' " +
@@ -670,7 +670,6 @@ function yesOrNoButtons(title) {
          }
    };
    sendMessage(message);
-   counterHell++;
 }
 
 
