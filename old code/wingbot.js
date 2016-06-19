@@ -1,4 +1,5 @@
-//Main File of wingbot
+//Main logic code of wingbot
+var catKey = require('./categoriesKey.js');
 
 //user object to store information given
 var user  = {
@@ -9,6 +10,7 @@ var user  = {
 
 var stateOftheApp = {
   state = {0,0};
+  catPool = 0;
   userAnswer = "";
 }
 
@@ -77,6 +79,13 @@ function askOpenEndedQuestion() {
   openEndedQuestions.splice(random, 1);
 }
 
+//function called when wanting to assign points to categoriesKey
+function fitInCategory(message) {
+  var poolOutcomes = catKey.checkIfPool(message);
+  for (int i = 0;i<poolOutcomes.length(); i++) {
+    if
+  }
+}
 
 
 //TODO: sendMessage function
@@ -84,10 +93,6 @@ function sendMessage() {
 
 }
 
-//TODO: getAnswer() function
-function getAnswer() {
-
-}
 
 //TODO: function where the app gets the webhook and gets either a message the user send or a payload!
 
@@ -157,21 +162,23 @@ function receivedMessage(event) {
     // the text we received.
     switch (stateOftheApp.state[0]) {
       case 1:
-        if (isNegative(messageText)) {
-          sendMessage(yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
+        if (stateOftheApp.state[1] == 0) {
+          if (isNegative(messageText)) {
+            sendMessage(yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
+            stateOftheApp.userAnswer = messageText;
+          } else {
+            user.facts.push(messageText);
+            fitInCategory(messageText);
+          }
         } else {
           user.facts.push(messageText);
         }
-
-        user.facts.push(messageText);
-        sendButtonMessage(senderID);
         break;
-
-      case 'generic':
+      case 2:
         sendGenericMessage(senderID);
         break;
 
-      case 'receipt':
+      case 3:
         sendReceiptMessage(senderID);
         break;
 
@@ -199,10 +206,17 @@ function receivedPostback(event) {
   // button for Structured Messages.
   var payload = event.postback.payload;
 
-  if (stateOftheApp.state == {0,0}) user.gender = payload;
-  else {
-    if(payload == "Yes") sendMessage("Ok, then I will use this fact to write your About me.");
-    else sendMessage("")
+  switch (stateOftheApp.state[0]) {
+    case 0:
+      user.gender = payload;
+      break;
+    case 1:
+      if(payload == "Yes") {
+        sendMessage("Ok, then I will use this fact to write your About me.");
+        user.facts.push(stateOftheApp.userAnswer);
+      } else {
+        stateOftheApp.state = {1,1};
+      }
   }
   console.log("Received postback for user %d and page %d with payload '%s' " +
     "at %d", senderID, recipientID, payload, timeOfPostback);

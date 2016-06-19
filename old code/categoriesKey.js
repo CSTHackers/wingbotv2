@@ -52,8 +52,24 @@ function addKeytoPersonalityPool(keyword,poolId) {
     }
 }
 
+//function grabs keywords from messages and returns index of the keyPool
+function checkIfPool(message) {
+  var wordsArray = splitStringforKeys(message);
+  var poolsMentioned;
+  for (int i =0; i<wordsArray.length; i++) {
+    if(checkPersonalityType(wordsArray[i]) !=0) poolsMentioned.push(checkPersonalityType(wordsArray[i]);
+  }
+  return poolsMentioned;
+}
+
+//split a string into words
+function splitStringforKeys (message) {
+
+  return array;
+}
+
 //give add a count
-function (poolId) {
+function addPointsToPersonality (poolId) {
   switch (poolId) {
     case 1: jockGirl.count++;  break;
     case 2: NPRnerd.count++; break;
