@@ -219,7 +219,7 @@ function chooseGender(event) {
   stateOftheApp.state = [1,0];
   //try to see if it works putting this function here that calls the first open ended question:
   console.log("got to the chooseGender function");
-  askOpenEndedQuestion(event);
+  //askOpenEndedQuestion(event);
 }
 
 //function called to get bot to give you one of the open ended questions:
