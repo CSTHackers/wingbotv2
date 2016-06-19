@@ -15,13 +15,15 @@ var haven = require('./oldCode/HavenOnDemand.js');
 var user  = {
   name: "",
   gender:"",
-  facts:[" "]
+  facts:[" "],
+  answeredQuestions: [""]
 };
 
 var stateOftheApp = {
   state:[0,0],
   catPool:0,
-  userAnswer: ""
+  userAnswer: "",
+  secondQuestion:0
 };
 
 var openEndedQuestions = ["Tell me one interesting thing about yourself.",
@@ -29,8 +31,27 @@ var openEndedQuestions = ["Tell me one interesting thing about yourself.",
                   "What do you do for fun?",
                   "empty string for test"];
 
+var manReactions = ["That’s cool bro.", "Awesome dude!", "Totally hardcore."];
+var girlReactions = ["That’s cute. I like that!", "Awww. That’s adorable.", "You go girl!"];
+var dinosaurReactions = ["Rawr!","That’s killer.", "You’ve got good mating instincts."];
 
+function getReaction() {
+  switch (user.gender) {
+    case "male" : return manReactions[Math.floor(Math.random() * 3)];
+    case "female": return girlReactions[Math.floor(Math.random() * 3)];
+    case "neutral": return dinosaurReactions[Math.floor(Math.random() * 3)];
+  }
+}
 
+function storeAnsweredQuestions (index, answer) {
+  var chosenPool = catKey.getObject(stateOftheApp.catPool);
+  addVariableToString(answer, chosenPool.answeredQuestions[index]);
+}
+
+//substitute # for answer variable
+function addVariableToString(answer, string) {
+  return string.replace("#", answer);
+}
 
 //chooseGender function where 3 buttons are shown and the user chooses their prefered gender
 function chooseGender() {
@@ -44,17 +65,17 @@ function chooseGender() {
               {
                 "type":"postback",
                 "title":"Male",
-                "payload":"gender_Male"
+                "payload":"male"
               },
               {
                 "type":"postback",
                 "title":"Female",
-                "payload":"gender_Female"
+                "payload":"female"
               },
               {
                 "type":"postback",
                 "title":"Dinousar",
-                "payload":"gender_Neutral"
+                "payload":"neutral"
               }
               ]
           }
@@ -76,7 +97,11 @@ function askOpenEndedQuestion() {
 
 function askKeyquestions() {
   if (stateOftheApp.state[0] === 1) stateOftheApp.state = [2,0];
-
+  var chosenPool = catKey.getObject(stateOftheApp.catPool);
+  var random = Math.floor(Math.random() * chosenPool.questions.length());
+  stateOftheApp.secondQuestion = random;
+  sendMessage(chosenPool.questions[random]);
+  chosenPool.questions.splice(random, 1);
 }
 
 /*
@@ -297,17 +322,37 @@ function receivedMessage(event) {
             sendMessage(yesOrNoButtons("This does not seem like a very positive fact about yourself, are you sure you do not want to change your answer?"));
             stateOftheApp.userAnswer = messageText;
           } else {
+            getReaction();
             user.facts.push(messageText);
             stateOftheApp.catPool = catKey.checkIfPool(messageText);
             askKeyquestions();
           }
         } else {
+          getReaction();
           user.facts.push(messageText);
           stateOftheApp.catPool = catKey.checkIfPool(messageText);
         }
         break;
       case 2:
-        sendGenericMessage(senderID);
+        var chosenPool = catKey.getObject(stateOftheApp.catPool);
+        if (stateOftheApp.state[1] === 0) {
+          if (haven.isNegative(messageText)) {
+            //if first key question is not liked you get a random catPool num and ask question again
+            stateOftheApp.catPool = Math.floor(Math.random() * 5)+1;
+            askKeyquestions();
+          } else {
+            //if they like the first question we send the subquestion:
+            stateOftheApp.state[1] = 1;
+            sendMessage(chosenPool.subquestion[stateOftheApp.secondQuestion]);
+          }
+        } else {
+          //if this is a repeat it means user is answering subquestion; we store the answeredQuestions and count++ to that pool
+          getReaction();
+          storeAnsweredQuestions(chosenPool.index, messageText);
+          catKey.addPointsToPersonality(chosenPool.index);
+          stateOftheApp.state[1] = 0;
+          askKeyquestions();
+        }
         break;
 
       case 3:

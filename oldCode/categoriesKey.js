@@ -5,6 +5,11 @@ var jockGirl = {
   keywords: ["sport", "sports", "club", "clubs","friends", "team","baseball", "football", "basketball", "beer", "pub", "bar" ],
   questions: ["Do you like watching sports?", "Do you play any sports?", "Are you part of the club scene?", "Do you lift?", "Can you run more than a mile without stopping?"],
   subQuestions: ["Who do you root for?", "Which are your favorites?", "Which one do you go to most often?", "How much?", "How much more?"],
+  answeredQuestions:["Yes, I am a huge # fan and I’m not ashamed of it. If you root for another team, I won’t judge you for it. Much.",
+                    "I’m definitely a competitive sort and actively play #. Some of them I do it for fun, but the bragging rights don’t hurt either.",
+                    "Do I have moves like Jagger? Possibly. Come out with me to # and find out sometime.",
+                    "If you’re looking for me, you’ll probably find me at the gym lifting 1/4 of my body weight. And before you ask, no I’m not telling how much that is.",
+                    "Oh yes, and if you want to go running, I’d love to try and keep up with you. At least for the first # miles that is."],
   statement: "In short: looking to take on everything life has to offer. Let me know if you’re in."
 };
 var NPRnerd = {
