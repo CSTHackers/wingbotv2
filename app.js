@@ -85,12 +85,8 @@ app.post('/webhook', function (req, res) {
 
       // Iterate over each messaging event
       pageEntry.messaging.forEach(function(messagingEvent) {
-        if (messagingEvent.optin) {
-          receivedAuthentication(messagingEvent);
-        } else if (messagingEvent.message) {
+        if (messagingEvent.message) {
           receivedMessage(messagingEvent);
-        } else if (messagingEvent.delivery) {
-          receivedDeliveryConfirmation(messagingEvent);
         } else if (messagingEvent.postback) {
           receivedPostback(messagingEvent);
         } else {
@@ -873,7 +869,7 @@ function checkIfPool(message) {
 //split a string into words
 function splitStringforKeys (message) {
   var temp = new Array();
-  temp = str.split(" ");
+  temp = message.split(" ");
   for(var i = 0; i < temp.length(); i++){
      if(temp[i] === "." || temp[i] === "," || temp[i] === "!") temp.splice(i,1);
   }
