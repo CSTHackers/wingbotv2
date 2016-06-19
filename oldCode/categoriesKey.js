@@ -2,18 +2,12 @@
 var jockGirl = {
   count: 0,
   index:1,
-  keywords: ["sport", "sports", "club", "clubs","friends", "team","baseball", "football", "basketball", "beer", "pub", "bar" ],
-  questions: ["Do you like watching sports?", "Do you play any sports?", "Are you part of the club scene?", "Do you lift?", "Can you run more than a mile without stopping?"],
-  subQuestions: ["Who do you root for?", "Which are your favorites?", "Which one do you go to most often?", "How much?", "How much more?"],
-  statement: "In short: looking to take on everything life has to offer. Let me know if you’re in."
+  keywords: ["sport", "sports", "club", "clubs","friends", "team","baseball", "football", "basketball", "beer", "pub", "bar" ]
 };
 var NPRnerd = {
   count: 0,
   index:2,
-  keywords: [""],
-  questions:[],
-  subQuestions:[],
-  statement: ""
+  keywords: [""]
 };
 var Foodie ={
   count: 0,
@@ -81,7 +75,7 @@ function getObject(index) {
     case 2: return NPRnerd;
     case 3: return Foodie;
     case 4: return STEMnerd;
-    case 5: return BigNerd;
+    case 5: return BigNerd; 
     default: return 0;
   }
 }

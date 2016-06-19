@@ -3,9 +3,9 @@
 
 /* Nolan Begin */
 
-var catKey = require('./categoriesKey.js');
-var wingbot = require('./wingbot.js');
-var haven = require('./HavenOnDemand.js');
+var catKey = require('.oldCode/categoriesKey.js');
+//var wingbot = require('./wingbot.js');
+var haven = require('.oldCode/HavenOnDemand.js');
 
 /* Nolan End */
 
@@ -28,6 +28,7 @@ var openEndedQuestions = ["Tell me one interesting thing about yourself.",
                   "What can you do better than anyone else?",
                   "What do you do for fun?",
                   "empty string for test"];
+
 
 
 
@@ -67,10 +68,15 @@ function chooseGender() {
 
 //function called to get bot to give you one of the open ended questions:
 function askOpenEndedQuestion() {
-  stateOftheApp.state = [1,0];
+  if (stateOftheApp.state[0] === 0) stateOftheApp.state = [1,0];
   var random = Math.floor(Math.random() * openEndedQuestions.length());
   sendMessage(openEndedQuestions[random]);
   openEndedQuestions.splice(random, 1);
+}
+
+function askKeyquestions() {
+  if (stateOftheApp.state[0] === 1) stateOftheApp.state = [2,0];
+
 }
 
 /*
@@ -293,6 +299,7 @@ function receivedMessage(event) {
           } else {
             user.facts.push(messageText);
             stateOftheApp.catPool = catKey.checkIfPool(messageText);
+            askKeyquestions();
           }
         } else {
           user.facts.push(messageText);
