@@ -29,18 +29,7 @@ var openEndedQuestions = {"Tell me one interesting thing about yourself.",
                   "What do you do for fun?",
                   "empty string for test"};
 
-//function that asks userName from the user
-function getUserName () {
-    sendMessage("Oh hey there, what’s your name?");
 
-    sendMessage("Hey "+userName+"! I’m Wingbot. Want some help writing your dating profile?");
-    if (getAnswer()=="NO" || getAnswer()=="no") {
-                        sendMessage("Ok. But if you do, I’ll be around. Catch you later!");
-                        end();
-                    } else {
-                      chooseGender();
-                    }
-}
 
 //chooseGender function where 3 buttons are shown and the user chooses their prefered gender
 function chooseGender() {
@@ -164,6 +153,7 @@ app.get('/webhook', function(req, res) {
  */
 
 //TODO: function that returns message when bot starts
+//sendMessage("Oh hey there, what’s your name?");
 
 app.post('/webhook', function (req, res) {
 
@@ -298,6 +288,11 @@ function receivedMessage(event) {
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (stateOftheApp.state[0]) {
+      case 0:
+        user.name = messageText;
+        sendMessage("Hey "+userName+"! I’m Wingbot. I can help you write your online dating Profile");
+        chooseGender();
+        break;
       case 1:
         if (stateOftheApp.state[1] == 0) {
           if (isNegative(messageText)) {
