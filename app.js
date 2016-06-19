@@ -700,11 +700,11 @@ function isNegative(message){
       var score = resp.body.aggregate.score;
       console.log("negative check");
       if(score > 0){
-        console.log("false")
+        console.log("false");
         return false;
       }
       else{
-        console.log("true")
+        console.log("true");
         return true;
       }
     }
