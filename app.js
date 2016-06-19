@@ -212,8 +212,10 @@ function addVariableToString(answer, string) {
 }
 
 //chooseGender function where 3 buttons are shown and the user chooses their prefered gender
-function chooseGender() {
- var  message = {
+function chooseGender(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var  message = {
       "attachment":{
           "type":"template",
           "payload":{
@@ -240,25 +242,29 @@ function chooseGender() {
         }
   };
   stateOftheApp.state = [0,0];
-  sendMessage(message);
+  sendMessage(senderID,message);
   //try to see if it works putting this function here that calls the first open ended question:
-  askOpenEndedQuestion();
+  askOpenEndedQuestion(event);
 }
 
 //function called to get bot to give you one of the open ended questions:
-function askOpenEndedQuestion() {
+function askOpenEndedQuestion(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
   if (stateOftheApp.state[0] === 0) stateOftheApp.state = [1,0];
   var random = Math.floor(Math.random() * openEndedQuestions.length);
-  sendMessage(openEndedQuestions[random]);
+  sendMessage(senderID,openEndedQuestions[random]);
   openEndedQuestions.splice(random, 1);
 }
 
-function askKeyquestions() {
+function askKeyquestions(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
   if (stateOftheApp.state[0] === 1) stateOftheApp.state = [2,0];
   var chosenPool = catKey.getObject(stateOftheApp.catPool);
   var random = Math.floor(Math.random() * chosenPool.questions.length);
   stateOftheApp.secondQuestion = random;
-  sendMessage(chosenPool.questions[random]);
+  sendMessage(senderID,chosenPool.questions[random]);
   chosenPool.questions.splice(random, 1);
 }
 
@@ -294,8 +300,8 @@ function receivedMessage(event) {
 
   console.log("before if message");
   if (messageText) {
-    sendMessage(senderID,messageText);
-    sendMessage(senderID, messageText);
+    //sendMessage(senderID,messageText);
+    //sendMessage(senderID, messageText);
     console.log("after two echos");
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
@@ -305,7 +311,7 @@ function receivedMessage(event) {
         console.log("case 0");
         user.name = messageText;
         sendMessage(senderID,"Hey "+user.name+"! I’m Wingbot. I can help you write your online dating Profile");
-        chooseGender();
+        chooseGender(event);
         break;
       case 1:
         if (stateOftheApp.state[1] === 0) {
@@ -316,7 +322,7 @@ function receivedMessage(event) {
             getReaction();
             user.facts.push(messageText);
             stateOftheApp.catPool = catKey.checkIfPool(messageText);
-            askKeyquestions();
+            askKeyquestions(event);
           }
         } else {
           getReaction();
@@ -330,7 +336,7 @@ function receivedMessage(event) {
           if (haven.isNegative(messageText)) {
             //if first key question is not liked you get a random catPool num and ask question again
             stateOftheApp.catPool = Math.floor(Math.random() * 5)+1;
-            askKeyquestions();
+            askKeyquestions(event);
           } else {
             //if they like the first question we send the subquestion:
             stateOftheApp.state[1] = 1;
@@ -342,7 +348,7 @@ function receivedMessage(event) {
           storeAnsweredQuestions(chosenPool.index, messageText);
           catKey.addPointsToPersonality(chosenPool.index);
           stateOftheApp.state[1] = 0;
-          askKeyquestions();
+          askKeyquestions(event);
         }
         break;
 
